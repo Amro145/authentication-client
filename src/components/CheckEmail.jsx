@@ -26,8 +26,7 @@ function CheckEmail() {
         initialValues={{ verificationToken: "" }}
         validationSchema={checkEmailSchema}
         onSubmit={(values) => {
-          const numericCode = Number(values.verificationToken);
-          dispatch(checkEmail({ verificationToken: numericCode }));
+          dispatch(checkEmail({ verificationToken: values.verificationToken }));
           console.log(values);
         }}
       >

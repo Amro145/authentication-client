@@ -96,13 +96,7 @@ function App() {
         />
         <Route
           path="/reset-password/:token"
-          element={
-            userData?.resetPasswordToken ? (
-              <ResetPassword token={userData.resetPasswordToken} />
-            ) : (
-              <Navigate to="/login" />
-            )
-          }
+          element={<ResetPassword />}
         />
         <Route
           path="/check-email"

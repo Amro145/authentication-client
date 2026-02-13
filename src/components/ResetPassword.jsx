@@ -2,11 +2,14 @@ import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
+import { useParams, useNavigate } from "react-router-dom";
 import { resetPassword } from "../store/api";
 import Loading from "./Loading";
+import Swal from "sweetalert2";
 
-function ResetPassword({ token }) {
-  console.log("token", token);
+function ResetPassword() {
+  const { token } = useParams();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { resetPasswordLoading } = useSelector((x) => x.auth);
 
@@ -23,8 +26,23 @@ function ResetPassword({ token }) {
       <Formik
         initialValues={{ password: "" }}
         validationSchema={resetPasswordSchema}
-        onSubmit={(values) => {
-          dispatch(resetPassword({ id: token, data: values }));
+        onSubmit={async (values) => {
+          try {
+            await dispatch(resetPassword({ id: token, data: values })).unwrap();
+            Swal.fire({
+              icon: "success",
+              title: "Password reset successful!",
+              text: "You can now log in with your new password.",
+              timer: 3000,
+            });
+            navigate("/login");
+          } catch (err) {
+            Swal.fire({
+              icon: "error",
+              title: "Failed to reset password",
+              text: err.message || "Something went wrong",
+            });
+          }
         }}
       >
         {({ isSubmitting }) => (

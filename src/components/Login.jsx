@@ -70,7 +70,7 @@ function Login() {
         )}
       </Formik>
       <div className="flex gap-2">
-        <Link to="/singup" className="text-blue-300 hover:underline">
+        <Link to="/signup" className="text-blue-300 hover:underline">
           create an account
         </Link>
         <Link to="/forgot-password" className="text-blue-300 hover:underline">

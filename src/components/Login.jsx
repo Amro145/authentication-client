@@ -24,20 +24,21 @@ function Login() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -20 }}
-        className="glass-card w-full max-w-md p-8 relative overflow-hidden"
+        transition={{ type: "spring", stiffness: 300, damping: 30 }}
+        className="glass-card w-full max-w-md p-10 relative overflow-hidden"
       >
-        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-emerald-500 to-teal-500" />
+        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-indigo-500 to-purple-600" />
 
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-white mb-2">Welcome Back</h1>
+          <h1 className="text-3xl font-bold text-white mb-2 tracking-tight">Welcome Back</h1>
           <p className="text-slate-400">Enter your credentials to access your account</p>
         </div>
 
         {error && (
           <motion.div
-            initial={{ opacity: 0, x: -10 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="mb-6 px-4 py-3 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-400 text-sm text-center"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="mb-6 px-4 py-3 rounded-lg bg-rose-500/10 border border-rose-500/20 text-rose-400 text-sm text-center flex items-center justify-center gap-2"
           >
             {error.message || "An error occurred"}
           </motion.div>
@@ -55,7 +56,7 @@ function Login() {
                 <div className="relative">
                   <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" size={18} />
                   <Field
-                    className="input-field w-full pl-10 pr-4 py-3 rounded-xl outline-none"
+                    className="input-field w-full pl-10 pr-4 py-3 outline-none"
                     type="email"
                     name="email"
                     placeholder="name@example.com"
@@ -67,14 +68,14 @@ function Login() {
               <div className="space-y-2">
                 <div className="flex justify-between items-center px-1">
                   <label className="text-sm font-medium text-slate-300">Password</label>
-                  <Link to="/forgot-password" size="sm" className="text-emerald-400 hover:text-emerald-300 text-xs transition-colors">
+                  <Link to="/forgot-password" size="sm" className="text-indigo-400 hover:text-indigo-300 text-xs transition-colors font-medium">
                     Forgot password?
                   </Link>
                 </div>
                 <div className="relative">
                   <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" size={18} />
                   <Field
-                    className="input-field w-full pl-10 pr-4 py-3 rounded-xl outline-none"
+                    className="input-field w-full pl-10 pr-4 py-3 outline-none"
                     type="password"
                     name="password"
                     placeholder="••••••••"
@@ -86,14 +87,14 @@ function Login() {
               <button
                 type="submit"
                 disabled={!isValid || !dirty || signinLoading}
-                className="btn-primary w-full py-3 rounded-xl font-semibold text-white flex items-center justify-center gap-2 group disabled:opacity-50 disabled:cursor-not-allowed"
+                className="btn-primary w-full py-3 rounded-lg font-semibold text-white flex items-center justify-center gap-2 group disabled:opacity-50 disabled:cursor-not-allowed mt-8"
               >
                 {signinLoading ? (
                   <Loader2 className="animate-spin" size={20} />
                 ) : (
                   <>
                     Sign In
-                    <ArrowRight className="group-hover:translate-x-1 transition-transform" size={20} />
+                    <ArrowRight className="group-hover:translate-x-1 transition-transform" size={18} />
                   </>
                 )}
               </button>
@@ -103,7 +104,7 @@ function Login() {
 
         <div className="mt-8 text-center text-slate-400 text-sm">
           Don't have an account?{" "}
-          <Link to="/signup" className="text-emerald-400 hover:text-emerald-300 font-medium transition-colors">
+          <Link to="/signup" className="text-indigo-400 hover:text-indigo-300 font-medium transition-colors">
             Create account
           </Link>
         </div>

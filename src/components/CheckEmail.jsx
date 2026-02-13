@@ -54,17 +54,18 @@ function CheckEmail() {
   return (
     <div className="min-h-screen flex items-center justify-center p-4">
       <motion.div
-        initial={{ opacity: 0, scale: 0.9 }}
+        initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
-        exit={{ opacity: 0, scale: 0.9 }}
-        className="glass-card w-full max-w-md p-8 text-center"
+        exit={{ opacity: 0, scale: 0.95 }}
+        transition={{ type: "spring", stiffness: 300, damping: 30 }}
+        className="glass-card w-full max-w-md p-10 text-center"
       >
-        <div className="mx-auto w-16 h-16 bg-emerald-500/20 rounded-2xl flex items-center justify-center mb-6">
-          <MailOpen className="text-emerald-400" size={32} />
+        <div className="mx-auto w-16 h-16 bg-indigo-500/20 rounded-full flex items-center justify-center mb-6 ring-4 ring-indigo-500/10">
+          <MailOpen className="text-indigo-400" size={32} />
         </div>
 
-        <h1 className="text-3xl font-bold text-white mb-2">Verify Email</h1>
-        <p className="text-slate-400 mb-8">
+        <h1 className="text-3xl font-bold text-white mb-2 tracking-tight">Verify Email</h1>
+        <p className="text-slate-400 mb-8 leading-relaxed">
           We've sent a 6-digit code to your email. Enter it below to verify your account.
         </p>
 
@@ -89,7 +90,7 @@ function CheckEmail() {
                 value={digit}
                 onChange={(e) => handleChange(index, e.target.value)}
                 onKeyDown={(e) => handleKeyDown(index, e)}
-                className="w-12 h-14 bg-slate-800/50 border border-slate-700/50 rounded-xl text-center text-xl font-bold text-white focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none transition-all"
+                className="w-12 h-14 bg-black/20 border-b-2 border-white/10 rounded-lg text-center text-xl font-bold text-white focus:border-indigo-500 focus:bg-black/40 outline-none transition-all"
               />
             ))}
           </div>
@@ -97,7 +98,7 @@ function CheckEmail() {
           <button
             type="submit"
             disabled={verifyEmailLoading || code.some(digit => digit === "")}
-            className="btn-primary w-full py-3 rounded-xl font-semibold text-white flex items-center justify-center gap-2 disabled:opacity-50"
+            className="btn-primary w-full py-3 rounded-lg font-semibold text-white flex items-center justify-center gap-2 disabled:opacity-50"
           >
             {verifyEmailLoading ? (
               <Loader2 className="animate-spin" size={20} />

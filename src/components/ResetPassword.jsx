@@ -33,18 +33,19 @@ function ResetPassword() {
     return (
       <div className="min-h-screen flex items-center justify-center p-4">
         <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
+          initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
-          className="glass-card w-full max-w-md p-8 text-center"
+          transition={{ type: "spring", stiffness: 300, damping: 30 }}
+          className="glass-card w-full max-w-md p-10 text-center"
         >
-          <div className="mx-auto w-16 h-16 bg-emerald-500/20 rounded-full flex items-center justify-center mb-6">
-            <CheckCircle className="text-emerald-400" size={32} />
+          <div className="mx-auto w-16 h-16 bg-indigo-500/20 rounded-full flex items-center justify-center mb-6 ring-4 ring-indigo-500/10">
+            <CheckCircle className="text-indigo-400" size={32} />
           </div>
-          <h1 className="text-2xl font-bold text-white mb-2">Success!</h1>
-          <p className="text-slate-400 mb-8">
+          <h1 className="text-2xl font-bold text-white mb-2 tracking-tight">Success!</h1>
+          <p className="text-slate-400 mb-8 leading-relaxed">
             Your password has been successfully reset.
           </p>
-          <Link to="/login" className="btn-primary inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-[#020617] w-full justify-center">
+          <Link to="/login" className="btn-primary inline-flex items-center gap-2 px-6 py-3 rounded-lg font-semibold text-white w-full justify-center">
             Back to Login
           </Link>
         </motion.div>
@@ -57,17 +58,18 @@ function ResetPassword() {
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="glass-card w-full max-w-md p-8 relative overflow-hidden"
+        transition={{ type: "spring", stiffness: 300, damping: 30 }}
+        className="glass-card w-full max-w-md p-10 relative overflow-hidden"
       >
-        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-emerald-500 to-teal-500" />
+        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-indigo-500 to-purple-600" />
 
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-white mb-2">Reset Password</h1>
+          <h1 className="text-3xl font-bold text-white mb-2 tracking-tight">Reset Password</h1>
           <p className="text-slate-400">Please enter your new password below.</p>
         </div>
 
         {error && (
-          <div className="mb-6 px-4 py-3 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-400 text-sm text-center">
+          <div className="mb-6 px-4 py-3 rounded-lg bg-rose-500/10 border border-rose-500/20 text-rose-400 text-sm text-center flex items-center justify-center gap-2">
             {error.message}
           </div>
         )}
@@ -86,7 +88,7 @@ function ResetPassword() {
                 <div className="relative">
                   <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" size={18} />
                   <Field
-                    className="input-field w-full pl-10 pr-4 py-3 rounded-xl outline-none"
+                    className="input-field w-full pl-10 pr-4 py-3 outline-none"
                     type="password"
                     name="password"
                     placeholder="••••••••"
@@ -100,7 +102,7 @@ function ResetPassword() {
                 <div className="relative">
                   <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" size={18} />
                   <Field
-                    className="input-field w-full pl-10 pr-4 py-3 rounded-xl outline-none"
+                    className="input-field w-full pl-10 pr-4 py-3 outline-none"
                     type="password"
                     name="confirmPassword"
                     placeholder="••••••••"
@@ -112,7 +114,7 @@ function ResetPassword() {
               <button
                 type="submit"
                 disabled={!isValid || !dirty || resetPasswordLoading}
-                className="btn-primary w-full py-3 rounded-xl font-semibold text-[#020617] flex items-center justify-center gap-2 disabled:opacity-50"
+                className="btn-primary w-full py-3 rounded-lg font-semibold text-white flex items-center justify-center gap-2 disabled:opacity-50 mt-8"
               >
                 {resetPasswordLoading ? (
                   <Loader2 className="animate-spin" size={20} />
@@ -125,7 +127,7 @@ function ResetPassword() {
         </Formik>
 
         <div className="mt-8 text-center">
-          <Link to="/login" className="text-emerald-400 hover:text-emerald-300 text-sm font-medium flex items-center justify-center gap-2 transition-colors">
+          <Link to="/login" className="text-indigo-400 hover:text-indigo-300 text-sm font-medium flex items-center justify-center gap-2 transition-colors">
             <ArrowLeft size={16} />
             Back to Login
           </Link>

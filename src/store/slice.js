@@ -10,7 +10,7 @@ import {
 } from "./api";
 
 const initialState = {
-    userData: JSON.parse(localStorage.getItem("userData")) || null,
+    userData: null,
     checkLoading: false,
     signupLoading: false,
     signinLoading: false,
@@ -19,6 +19,7 @@ const initialState = {
     forgotPasswordLoading: false,
     logoutLoading: false,
     error: null,
+    success: false, // Added for UI notifications
 }
 
 const authSlice = createSlice({
@@ -27,6 +28,9 @@ const authSlice = createSlice({
     reducers: {
         clearError: (state) => {
             state.error = null;
+        },
+        resetSuccess: (state) => {
+            state.success = false;
         }
     },
     extraReducers: (builder) => {
@@ -38,6 +42,7 @@ const authSlice = createSlice({
                     const baseType = action.type.split("/")[1];
                     state[`${baseType}Loading`] = true;
                     state.error = null;
+                    state.success = false;
                 }
             )
             // Combined Rejected Handler
@@ -47,6 +52,7 @@ const authSlice = createSlice({
                     const baseType = action.type.split("/")[1];
                     state[`${baseType}Loading`] = false;
                     state.error = action.payload;
+                    state.success = false;
                 }
             )
             // Combined Fulfilled Handler (Success)
@@ -55,6 +61,7 @@ const authSlice = createSlice({
                 (state, action) => {
                     const baseType = action.type.split("/")[1];
                     state[`${baseType}Loading`] = false;
+                    state.success = true;
 
                     if (baseType === 'logout') {
                         state.userData = null;
@@ -68,5 +75,5 @@ const authSlice = createSlice({
     }
 });
 
-export const { clearError } = authSlice.actions;
+export const { clearError, resetSuccess } = authSlice.actions;
 export default authSlice.reducer;

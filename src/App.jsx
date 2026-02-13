@@ -92,11 +92,7 @@ function App() {
           {/* Logic-based routes */}
           <Route
             path="/reset-password/:token"
-            element={
-              <PublicRoute>
-                <ResetPassword />
-              </PublicRoute>
-            }
+            element={<ResetPassword />}
           />
 
           <Route

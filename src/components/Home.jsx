@@ -51,9 +51,9 @@ function Home() {
                   <ShieldCheck size={12} />
                   Verified Account
                 </span>
-                <span className="px-3 py-1 rounded-full bg-white/5 text-slate-400 text-xs font-medium border border-white/10 flex items-center gap-1">
+                <span className="px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-400 text-xs font-medium border border-indigo-500/20 flex items-center gap-1">
                   <Calendar size={12} />
-                  Joined Feb 2024
+                  Last login: {userData.lastLogin ? new Date(userData.lastLogin).toLocaleString() : 'Just now'}
                 </span>
               </div>
             </div>

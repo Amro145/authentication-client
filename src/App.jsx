@@ -35,6 +35,13 @@ function App() {
 
   return (
     <div className="min-h-screen relative overflow-hidden">
+      {/* Premium Background Blobs */}
+      <div className="bg-blobs">
+        <div className="blob blob-1"></div>
+        <div className="blob blob-2"></div>
+        <div className="blob blob-3"></div>
+      </div>
+
       {/* Navbar / Header */}
       {userData && (
         <nav className="absolute top-0 right-0 p-6 z-50">

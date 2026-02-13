@@ -15,6 +15,11 @@ const initialState = {
 const authSlice = createSlice({
     name: "auth",
     initialState,
+    reducers: {
+        clearError: (state) => {
+            state.error = null;
+        }
+    },
     extraReducers: (builder) => {
         builder
             // checkAuth
@@ -96,8 +101,8 @@ const authSlice = createSlice({
                 state.forgotPasswordLoading = false;
                 // forgotPassword might not return user data if it just sends an email
                 // but let's assume it might return some token info if needed
-                state.userData = action.payload.data;
                 if (action.payload.data) {
+                    state.userData = action.payload.data;
                     localStorage.setItem("userData", JSON.stringify(action.payload.data));
                 }
             })
@@ -112,8 +117,8 @@ const authSlice = createSlice({
             })
             .addCase(resetPassword.fulfilled, (state, action) => {
                 state.resetPasswordLoading = false;
-                state.userData = action.payload.data;
                 if (action.payload.data) {
+                    state.userData = action.payload.data;
                     localStorage.setItem("userData", JSON.stringify(action.payload.data));
                 }
             })
@@ -121,8 +126,8 @@ const authSlice = createSlice({
                 state.resetPasswordLoading = false;
                 state.error = action.payload;
             })
-
-
     }
 })
-export default authSlice.reducer
+
+export const { clearError } = authSlice.actions;
+export default authSlice.reducer;

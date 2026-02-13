@@ -1,115 +1,113 @@
 import React, { useEffect } from "react";
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { AnimatePresence } from "framer-motion";
+import { checkAuth, logout } from "./store/api";
+import { clearError } from "./store/slice";
+import { ProtectedRoute, PublicRoute } from "./components/AuthRoutes";
+
+// Components
 import Login from "./components/Login";
 import Home from "./components/Home";
 import Signup from "./components/Signup";
 import ForgotPassword from "./components/ForgotPassword";
 import ResetPassword from "./components/ResetPassword";
 import CheckEmail from "./components/CheckEmail";
-import { useDispatch, useSelector } from "react-redux";
-import { checkAuth, logout } from "./store/api";
 import Loading from "./components/Loading";
-import Swal from "sweetalert2";
+import { LogOut } from "lucide-react";
 
 function App() {
   const dispatch = useDispatch();
-  const { userData, checkLoading, error } = useSelector((state) => state.auth);
+  const location = useLocation();
+  const { userData, checkLoading } = useSelector((state) => state.auth);
 
   useEffect(() => {
     dispatch(checkAuth());
   }, [dispatch]);
 
   useEffect(() => {
-    if (error && error.message !== "Unauthorized! No user found.") {
-      Swal.fire({
-        icon: "error",
-        title: error.message || "An error occurred",
-        showConfirmButton: false,
-        timer: 2000,
-      }).then(() => {
-        // If it's a critical error, we might want to logout
-        if (error.statusCode === 401) {
-          localStorage.removeItem("userData");
-          dispatch(logout());
-        }
-      });
-    }
-  }, [error, dispatch]);
+    dispatch(clearError());
+  }, [location.pathname, dispatch]);
 
   if (checkLoading) {
     return <Loading />;
   }
 
   return (
-    <div className="min-h-screen bg-gray-800 text-amber-50">
-      <div className="flex justify-center items-center py-4">
-        {userData ? (
+    <div className="min-h-screen relative overflow-hidden">
+      {/* Navbar / Header */}
+      {userData && (
+        <nav className="absolute top-0 right-0 p-6 z-50">
           <button
-            className="bg-red-600 hover:bg-red-700 px-4 py-2 rounded transition-colors"
             onClick={() => dispatch(logout())}
+            className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 transition-all text-white border border-white/10 backdrop-blur-sm"
           >
-            Logout
+            <LogOut size={18} />
+            <span className="font-medium">Logout</span>
           </button>
-        ) : null}
-      </div>
+        </nav>
+      )}
 
-      <Routes>
-        <Route
-          path="/"
-          element={
-            userData ? (
-              userData?.resetPasswordToken ? (
-                <Navigate
-                  to={`/reset-password/${userData.resetPasswordToken}`}
-                />
-              ) : userData?.verificationToken ? (
-                <Navigate to="/check-email" />
-              ) : (
+      <AnimatePresence mode="wait">
+        <Routes location={location} key={location.pathname}>
+          {/* Protected Routes */}
+          <Route
+            path="/"
+            element={
+              <ProtectedRoute>
                 <Home />
-              )
-            ) : (
-              <Navigate to="/login" />
-            )
-          }
-        />
-        <Route
-          path="/login"
-          element={
-            userData ? (
-              userData?.verificationToken ? (
-                <Navigate to="/check-email" />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Public Routes */}
+          <Route
+            path="/login"
+            element={
+              <PublicRoute>
+                <Login />
+              </PublicRoute>
+            }
+          />
+          <Route
+            path="/signup"
+            element={
+              <PublicRoute>
+                <Signup />
+              </PublicRoute>
+            }
+          />
+          <Route
+            path="/forgot-password"
+            element={
+              <PublicRoute>
+                <ForgotPassword />
+              </PublicRoute>
+            }
+          />
+
+          {/* Logic-based routes */}
+          <Route
+            path="/reset-password/:token"
+            element={<ResetPassword />}
+          />
+
+          <Route
+            path="/check-email"
+            element={
+              userData && !userData.isVerified ? (
+                <CheckEmail />
               ) : (
-                <Navigate to="/" />
+                <PublicRoute>
+                  <Login />
+                </PublicRoute>
               )
-            ) : (
-              <Login />
-            )
-          }
-        />
-        <Route
-          path="/signup"
-          element={userData ? <Navigate to="/" /> : <Signup />}
-        />
-        <Route
-          path="/forgot-password"
-          element={userData ? <Navigate to="/" /> : <ForgotPassword />}
-        />
-        <Route
-          path="/reset-password/:token"
-          element={<ResetPassword />}
-        />
-        <Route
-          path="/check-email"
-          element={
-            userData && userData.verificationToken ? (
-              <CheckEmail />
-            ) : (
-              <Navigate to="/login" />
-            )
-          }
-        />
-        <Route path="/loading" element={<Loading />} />
-      </Routes>
+            }
+          />
+
+          <Route path="*" element={<Loading />} />
+        </Routes>
+      </AnimatePresence>
     </div>
   );
 }

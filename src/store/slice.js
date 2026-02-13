@@ -1,17 +1,26 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { checkAuth, checkEmail, forgotPassword, login, logout, resetPassword, signup } from "./api";
+import {
+    checkAuth,
+    verifyEmail,
+    forgotPassword,
+    login,
+    logout,
+    resetPassword,
+    signup
+} from "./api";
 
 const initialState = {
-    userData: null,
+    userData: JSON.parse(localStorage.getItem("userData")) || null,
     checkLoading: false,
     signupLoading: false,
     signinLoading: false,
-    checkEmailLoading: false,
+    verifyEmailLoading: false,
     resetPasswordLoading: false,
     forgotPasswordLoading: false,
     logoutLoading: false,
     error: null,
 }
+
 const authSlice = createSlice({
     name: "auth",
     initialState,
@@ -22,112 +31,42 @@ const authSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-            // checkAuth
-            .addCase(checkAuth.pending, (state) => {
-                state.checkLoading = true;
-                state.error = null
-            })
-            .addCase(checkAuth.fulfilled, (state, action) => {
-                state.checkLoading = false;
-                state.userData = action.payload.data;
-                localStorage.setItem("userData", JSON.stringify(action.payload.data));
-            })
-            .addCase(checkAuth.rejected, (state, action) => {
-                state.checkLoading = false;
-                state.error = action.payload;
-            })
-            // signup
-            .addCase(signup.pending, (state) => {
-                state.signupLoading = true;
-                state.error = null;
-            })
-            .addCase(signup.fulfilled, (state, action) => {
-                state.signupLoading = false;
-                state.userData = action.payload.data;
-                localStorage.setItem("userData", JSON.stringify(action.payload.data));
-            })
-            .addCase(signup.rejected, (state, action) => {
-                state.signupLoading = false;
-                state.error = action.payload;
-            })
-            // login
-            .addCase(login.pending, (state) => {
-                state.signinLoading = true;
-                state.error = null;
-            })
-            .addCase(login.fulfilled, (state, action) => {
-                state.signinLoading = false;
-                state.userData = action.payload.data;
-                localStorage.setItem("userData", JSON.stringify(action.payload.data));
-            })
-            .addCase(login.rejected, (state, action) => {
-                state.signinLoading = false;
-                state.error = action.payload;
-            })
-            // logout
-            .addCase(logout.pending, (state) => {
-                state.logoutLoading = true;
-                state.error = null;
-            })
-            .addCase(logout.fulfilled, (state) => {
-                state.logoutLoading = false;
-                state.userData = null;
-                localStorage.removeItem("userData");
-            })
-            .addCase(logout.rejected, (state, action) => {
-                state.logoutLoading = false;
-                state.error = action.payload;
-            })
-            // checkEmail
-            .addCase(checkEmail.pending, (state) => {
-                state.checkEmailLoading = true;
-                state.error = null;
-            })
-            .addCase(checkEmail.fulfilled, (state, action) => {
-                state.checkEmailLoading = false;
-                state.userData = action.payload.data;
-                localStorage.setItem("userData", JSON.stringify(action.payload.data));
-            })
-            .addCase(checkEmail.rejected, (state, action) => {
-                state.checkEmailLoading = false;
-                state.error = action.payload;
-            })
-            // forgetPassword
-            .addCase(forgotPassword.pending, (state) => {
-                state.forgotPasswordLoading = true;
-                state.error = null;
-            })
-            .addCase(forgotPassword.fulfilled, (state, action) => {
-                state.forgotPasswordLoading = false;
-                // forgotPassword might not return user data if it just sends an email
-                // but let's assume it might return some token info if needed
-                if (action.payload.data) {
-                    state.userData = action.payload.data;
-                    localStorage.setItem("userData", JSON.stringify(action.payload.data));
+            // Combined Pending Handler
+            .addMatcher(
+                (action) => action.type.endsWith("/pending"),
+                (state, action) => {
+                    const baseType = action.type.split("/")[1];
+                    state[`${baseType}Loading`] = true;
+                    state.error = null;
                 }
-            })
-            .addCase(forgotPassword.rejected, (state, action) => {
-                state.forgotPasswordLoading = false;
-                state.error = action.payload;
-            })
-            // reset Password
-            .addCase(resetPassword.pending, (state) => {
-                state.resetPasswordLoading = true;
-                state.error = null;
-            })
-            .addCase(resetPassword.fulfilled, (state, action) => {
-                state.resetPasswordLoading = false;
-                if (action.payload.data) {
-                    state.userData = action.payload.data;
-                    localStorage.setItem("userData", JSON.stringify(action.payload.data));
+            )
+            // Combined Rejected Handler
+            .addMatcher(
+                (action) => action.type.endsWith("/rejected"),
+                (state, action) => {
+                    const baseType = action.type.split("/")[1];
+                    state[`${baseType}Loading`] = false;
+                    state.error = action.payload;
                 }
-            })
-            .addCase(resetPassword.rejected, (state, action) => {
-                state.resetPasswordLoading = false;
-                state.error = action.payload;
-            })
+            )
+            // Combined Fulfilled Handler (Success)
+            .addMatcher(
+                (action) => action.type.endsWith("/fulfilled"),
+                (state, action) => {
+                    const baseType = action.type.split("/")[1];
+                    state[`${baseType}Loading`] = false;
+
+                    if (baseType === 'logout') {
+                        state.userData = null;
+                        localStorage.removeItem("userData");
+                    } else if (action.payload?.data) {
+                        state.userData = action.payload.data;
+                        localStorage.setItem("userData", JSON.stringify(action.payload.data));
+                    }
+                }
+            );
     }
-})
+});
 
 export const { clearError } = authSlice.actions;
 export default authSlice.reducer;

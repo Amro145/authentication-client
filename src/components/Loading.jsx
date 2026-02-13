@@ -9,7 +9,7 @@ function Loading() {
           <motion.div
             animate={{ rotate: 360 }}
             transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
-            className="absolute inset-0 rounded-full border-t-2 border-indigo-500"
+            className="absolute inset-0 rounded-full border-t-2 border-emerald-500"
           ></motion.div>
           <motion.div
             animate={{ rotate: -360 }}
@@ -19,13 +19,13 @@ function Loading() {
           <motion.div
             animate={{ opacity: [0.3, 1, 0.3] }}
             transition={{ duration: 1.5, repeat: Infinity }}
-            className="absolute inset-0 rounded-full bg-indigo-500/10 blur-xl"
+            className="absolute inset-0 rounded-full bg-emerald-500/10 blur-xl"
           ></motion.div>
         </div>
         <motion.div
           animate={{ opacity: [0.4, 1, 0.4] }}
           transition={{ duration: 1.5, repeat: Infinity }}
-          className="text-indigo-400 font-medium tracking-widest text-sm uppercase"
+          className="text-emerald-400 font-medium tracking-widest text-sm uppercase"
         >
           Securing your session...
         </motion.div>

@@ -35,19 +35,15 @@ function App() {
 
   return (
     <div className="min-h-screen relative overflow-hidden">
-      {/* Premium Background Blobs */}
-      <div className="bg-blobs">
-        <div className="blob blob-1"></div>
-        <div className="blob blob-2"></div>
-        <div className="blob blob-3"></div>
-      </div>
+      {/* Optimized Background */}
+      <div className="bg-blobs" />
 
       {/* Navbar / Header */}
       {userData && (
         <nav className="absolute top-0 right-0 p-6 z-50">
           <button
             onClick={() => dispatch(logout())}
-            className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 transition-all text-white border border-white/10 backdrop-blur-sm"
+            className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 hover:bg-emerald-500/20 hover:text-emerald-400 transition-all text-white border border-white/10 backdrop-blur-sm group"
           >
             <LogOut size={18} />
             <span className="font-medium">Logout</span>

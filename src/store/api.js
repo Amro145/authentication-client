@@ -1,12 +1,17 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import api from "../utils/axios";
 
+// Helper for error handling in thunks
+const handleThunkError = (error, rejectWithValue) => {
+    return rejectWithValue(error.response?.data || { message: error.message });
+};
+
 export const signup = createAsyncThunk("auth/signup", async (data, { rejectWithValue }) => {
     try {
         const res = await api.post("/signup", data);
         return res.data;
     } catch (error) {
-        return rejectWithValue(error.response?.data || { message: error.message });
+        return handleThunkError(error, rejectWithValue);
     }
 });
 
@@ -15,7 +20,7 @@ export const login = createAsyncThunk("auth/login", async (data, { rejectWithVal
         const res = await api.post("/signin", data);
         return res.data;
     } catch (error) {
-        return rejectWithValue(error.response?.data || { message: error.message });
+        return handleThunkError(error, rejectWithValue);
     }
 });
 
@@ -24,16 +29,16 @@ export const logout = createAsyncThunk("auth/logout", async (_, { rejectWithValu
         const res = await api.post("/logout");
         return res.data;
     } catch (error) {
-        return rejectWithValue(error.response?.data || { message: error.message });
+        return handleThunkError(error, rejectWithValue);
     }
 });
 
-export const checkEmail = createAsyncThunk("auth/checkEmail", async (data, { rejectWithValue }) => {
+export const verifyEmail = createAsyncThunk("auth/verifyEmail", async (data, { rejectWithValue }) => {
     try {
         const res = await api.post("/verify-email", data);
         return res.data;
     } catch (error) {
-        return rejectWithValue(error.response?.data || { message: error.message });
+        return handleThunkError(error, rejectWithValue);
     }
 });
 
@@ -42,7 +47,7 @@ export const forgotPassword = createAsyncThunk("auth/forgotPassword", async (dat
         const res = await api.post("/forgot-password", data);
         return res.data;
     } catch (error) {
-        return rejectWithValue(error.response?.data || { message: error.message });
+        return handleThunkError(error, rejectWithValue);
     }
 });
 
@@ -51,7 +56,7 @@ export const resetPassword = createAsyncThunk("auth/resetPassword", async ({ id,
         const res = await api.post(`/reset-password/${id}`, data);
         return res.data;
     } catch (error) {
-        return rejectWithValue(error.response?.data || { message: error.message });
+        return handleThunkError(error, rejectWithValue);
     }
 });
 
@@ -60,6 +65,6 @@ export const checkAuth = createAsyncThunk("auth/checkAuth", async (_, { rejectWi
         const res = await api.get("/check-auth");
         return res.data;
     } catch (error) {
-        return rejectWithValue(error.response?.data || { message: error.message });
+        return handleThunkError(error, rejectWithValue);
     }
 });

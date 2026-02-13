@@ -30,7 +30,7 @@ function ResetPassword() {
         animate={{ opacity: 1, scale: 1 }}
         className="glass-card w-full max-w-md p-8 relative overflow-hidden"
       >
-        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-indigo-500 to-purple-500" />
+        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-emerald-500 to-teal-500" />
 
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-white mb-2">Reset Password</h1>
@@ -53,9 +53,9 @@ function ResetPassword() {
                 icon: "success",
                 title: "Success!",
                 text: "Your password has been successfully reset.",
-                background: "#1e293b",
+                background: "#020617",
                 color: "#f8fafc",
-                confirmButtonColor: "#6366f1",
+                confirmButtonColor: "#10b981",
               });
               navigate("/login");
             } catch (err) {
@@ -109,7 +109,7 @@ function ResetPassword() {
         </Formik>
 
         <div className="mt-8 text-center">
-          <Link to="/login" className="text-indigo-400 hover:text-indigo-300 text-sm font-medium flex items-center justify-center gap-2 transition-colors">
+          <Link to="/login" className="text-emerald-400 hover:text-emerald-300 text-sm font-medium flex items-center justify-center gap-2 transition-colors">
             <ArrowLeft size={16} />
             Back to Login
           </Link>

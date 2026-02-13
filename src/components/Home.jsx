@@ -22,7 +22,7 @@ function Home() {
             transition={{ delay: 0.2 }}
             className="text-4xl md:text-5xl font-bold text-white tracking-tight"
           >
-            Welcome back, <span className="text-indigo-400">{userData.name || "User"}</span>!
+            Welcome back, <span className="text-emerald-400">{userData.name || "User"}</span>!
           </motion.h1>
           <p className="text-slate-400">Here's what's happening with your account today.</p>
         </div>
@@ -35,8 +35,8 @@ function Home() {
             transition={{ delay: 0.3 }}
             className="md:col-span-2 glass-card p-8 flex flex-col md:flex-row items-center gap-8"
           >
-            <div className="w-24 h-24 rounded-3xl bg-indigo-500/20 flex items-center justify-center border border-indigo-500/30">
-              <User size={48} className="text-indigo-400" />
+            <div className="w-24 h-24 rounded-3xl bg-emerald-500/20 flex items-center justify-center border border-emerald-500/30">
+              <User size={48} className="text-emerald-400" />
             </div>
             <div className="flex-1 space-y-4 text-center md:text-left">
               <div className="space-y-1">
@@ -51,7 +51,7 @@ function Home() {
                   <ShieldCheck size={12} />
                   Verified Account
                 </span>
-                <span className="px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-400 text-xs font-medium border border-indigo-500/20 flex items-center gap-1">
+                <span className="px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 text-xs font-medium border border-emerald-500/20 flex items-center gap-1">
                   <Calendar size={12} />
                   Last login: {userData.lastLogin ? new Date(userData.lastLogin).toLocaleString() : 'Just now'}
                 </span>
@@ -76,7 +76,7 @@ function Home() {
                 <span className="text-slate-400 text-sm">Security Score</span>
                 <span className="text-emerald-400 font-bold">98%</span>
               </div>
-              <button className="w-full flex items-center justify-center gap-2 mt-2 px-4 py-2 rounded-xl bg-indigo-500/10 text-indigo-400 hover:bg-indigo-500/20 transition-all border border-indigo-500/20 text-sm font-medium">
+              <button className="w-full flex items-center justify-center gap-2 mt-2 px-4 py-2 rounded-xl bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500/20 transition-all border border-emerald-500/20 text-sm font-medium">
                 <Settings size={16} />
                 Manage Settings
               </button>

@@ -26,7 +26,7 @@ function Login() {
         exit={{ opacity: 0, y: -20 }}
         className="glass-card w-full max-w-md p-8 relative overflow-hidden"
       >
-        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-indigo-500 to-purple-500" />
+        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-emerald-500 to-teal-500" />
 
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-white mb-2">Welcome Back</h1>
@@ -67,7 +67,7 @@ function Login() {
               <div className="space-y-2">
                 <div className="flex justify-between items-center px-1">
                   <label className="text-sm font-medium text-slate-300">Password</label>
-                  <Link to="/forgot-password" size="sm" className="text-indigo-400 hover:text-indigo-300 text-xs transition-colors">
+                  <Link to="/forgot-password" size="sm" className="text-emerald-400 hover:text-emerald-300 text-xs transition-colors">
                     Forgot password?
                   </Link>
                 </div>
@@ -103,7 +103,7 @@ function Login() {
 
         <div className="mt-8 text-center text-slate-400 text-sm">
           Don't have an account?{" "}
-          <Link to="/signup" className="text-indigo-400 hover:text-indigo-300 font-medium transition-colors">
+          <Link to="/signup" className="text-emerald-400 hover:text-emerald-300 font-medium transition-colors">
             Create account
           </Link>
         </div>

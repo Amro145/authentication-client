@@ -1,14 +1,14 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { motion } from "framer-motion";
-import { checkEmail } from "../store/api";
+import { verifyEmail } from "../store/api";
 import { MailOpen, Loader2 } from "lucide-react";
 
 function CheckEmail() {
   const [code, setCode] = useState(["", "", "", "", "", ""]);
   const inputRefs = useRef([]);
   const dispatch = useDispatch();
-  const { checkEmailLoading, error } = useSelector((state) => state.auth);
+  const { verifyEmailLoading, error } = useSelector((state) => state.auth);
 
   const handleChange = (index, value) => {
     const char = value.slice(-1); // Only take the last character
@@ -40,7 +40,7 @@ function CheckEmail() {
     if (e) e.preventDefault();
     const verificationCode = code.join("");
     if (verificationCode.length === 6) {
-      dispatch(checkEmail({ verificationToken: verificationCode }));
+      dispatch(verifyEmail({ verificationToken: verificationCode }));
     }
   };
 
@@ -59,8 +59,8 @@ function CheckEmail() {
         exit={{ opacity: 0, scale: 0.9 }}
         className="glass-card w-full max-w-md p-8 text-center"
       >
-        <div className="mx-auto w-16 h-16 bg-indigo-500/20 rounded-2xl flex items-center justify-center mb-6">
-          <MailOpen className="text-indigo-400" size={32} />
+        <div className="mx-auto w-16 h-16 bg-emerald-500/20 rounded-2xl flex items-center justify-center mb-6">
+          <MailOpen className="text-emerald-400" size={32} />
         </div>
 
         <h1 className="text-3xl font-bold text-white mb-2">Verify Email</h1>
@@ -89,17 +89,17 @@ function CheckEmail() {
                 value={digit}
                 onChange={(e) => handleChange(index, e.target.value)}
                 onKeyDown={(e) => handleKeyDown(index, e)}
-                className="w-12 h-14 bg-slate-800/50 border border-slate-700/50 rounded-xl text-center text-xl font-bold text-white focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition-all"
+                className="w-12 h-14 bg-slate-800/50 border border-slate-700/50 rounded-xl text-center text-xl font-bold text-white focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none transition-all"
               />
             ))}
           </div>
 
           <button
             type="submit"
-            disabled={checkEmailLoading || code.some(digit => digit === "")}
+            disabled={verifyEmailLoading || code.some(digit => digit === "")}
             className="btn-primary w-full py-3 rounded-xl font-semibold text-white flex items-center justify-center gap-2 disabled:opacity-50"
           >
-            {checkEmailLoading ? (
+            {verifyEmailLoading ? (
               <Loader2 className="animate-spin" size={20} />
             ) : (
               "Verify Now"

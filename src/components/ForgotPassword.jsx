@@ -98,7 +98,7 @@ function ForgotPassword() {
         </Formik>
 
         <div className="mt-8 text-center">
-          <Link to="/login" className="text-indigo-400 hover:text-indigo-300 text-sm font-medium flex items-center justify-center gap-2 transition-colors">
+          <Link to="/login" className="text-emerald-400 hover:text-emerald-300 text-sm font-medium flex items-center justify-center gap-2 transition-colors">
             <ArrowLeft size={16} />
             Back to Login
           </Link>

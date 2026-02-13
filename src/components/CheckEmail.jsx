@@ -80,7 +80,7 @@ function CheckEmail() {
         )}
 
         <form onSubmit={handleSubmit} className="space-y-8">
-          <div className="flex justify-between gap-2 max-w-sm mx-auto">
+          <div className="flex justify-between gap-3 max-w-sm mx-auto">
             {code.map((digit, index) => (
               <input
                 key={index}
@@ -90,7 +90,7 @@ function CheckEmail() {
                 value={digit}
                 onChange={(e) => handleChange(index, e.target.value)}
                 onKeyDown={(e) => handleKeyDown(index, e)}
-                className="w-12 h-14 bg-black/20 border-b-2 border-white/10 rounded-lg text-center text-xl font-bold text-white focus:border-indigo-500 focus:bg-black/40 outline-none transition-all"
+                className="w-12 h-14 bg-black/20 border-b-2 border-white/10 rounded-xl text-center text-xl font-bold text-white focus:border-indigo-500 focus:bg-black/40 outline-none transition-all p-2"
               />
             ))}
           </div>

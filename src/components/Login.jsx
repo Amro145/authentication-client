@@ -52,7 +52,7 @@ function Login() {
           {({ isValid, dirty }) => (
             <Form className="space-y-6">
               <div className="space-y-2">
-                <label className="text-sm font-medium text-slate-300 ml-1">Email Address</label>
+                <label className="text-sm font-medium text-slate-300 ml-1 block mb-1">Email Address</label>
                 <div className="relative">
                   <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" size={18} />
                   <Field
@@ -66,8 +66,8 @@ function Login() {
               </div>
 
               <div className="space-y-2">
-                <div className="flex justify-between items-center px-1">
-                  <label className="text-sm font-medium text-slate-300">Password</label>
+                <div className="flex justify-between items-center px-1 mb-1">
+                  <label className="text-sm font-medium text-slate-300 ml-1 block">Password</label>
                   <Link to="/forgot-password" size="sm" className="text-indigo-400 hover:text-indigo-300 text-xs transition-colors font-medium">
                     Forgot password?
                   </Link>

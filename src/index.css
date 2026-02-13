@@ -86,19 +86,19 @@ body {
 }
 
 /* Modern Input Fields */
+/* Modern Input Fields */
 .input-field {
-  background: rgba(0, 0, 0, 0.2) !important;
-  border: 1px solid transparent !important;
-  border-bottom: 2px solid rgba(255, 255, 255, 0.1) !important;
-  color: white !important;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid transparent;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+  color: white;
   transition: all 0.3s ease;
-  border-radius: 0.75rem 0.75rem 0 0; /* Top rounded only or slightly rounded full */
-  border-radius: 0.5rem !important; /* Let's stick to standard rounded for safer look */
+  border-radius: 0.75rem; /* rounded-xl */
 }
 
 .input-field:focus {
-  background: rgba(0, 0, 0, 0.4) !important;
-  border-bottom-color: var(--primary-start) !important;
+  background: rgba(0, 0, 0, 0.4);
+  border-bottom-color: var(--primary-start);
   box-shadow: 0 4px 12px rgba(99, 102, 241, 0.1);
   outline: none;
 }

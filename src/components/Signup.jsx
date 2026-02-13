@@ -53,7 +53,7 @@ function Signup() {
           {({ isValid, dirty }) => (
             <Form className="space-y-5">
               <div className="space-y-2">
-                <label className="text-sm font-medium text-slate-300 ml-1">Full Name</label>
+                <label className="text-sm font-medium text-slate-300 ml-1 block mb-1">Full Name</label>
                 <div className="relative">
                   <User className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" size={18} />
                   <Field
@@ -67,7 +67,7 @@ function Signup() {
               </div>
 
               <div className="space-y-2">
-                <label className="text-sm font-medium text-slate-300 ml-1">Email Address</label>
+                <label className="text-sm font-medium text-slate-300 ml-1 block mb-1">Email Address</label>
                 <div className="relative">
                   <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" size={18} />
                   <Field
@@ -81,7 +81,7 @@ function Signup() {
               </div>
 
               <div className="space-y-2">
-                <label className="text-sm font-medium text-slate-300 ml-1">Password</label>
+                <label className="text-sm font-medium text-slate-300 ml-1 block mb-1">Password</label>
                 <div className="relative">
                   <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" size={18} />
                   <Field

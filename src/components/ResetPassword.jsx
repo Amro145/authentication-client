@@ -78,6 +78,7 @@ function ResetPassword() {
           initialValues={{ password: "", confirmPassword: "" }}
           validationSchema={resetPasswordSchema}
           onSubmit={(values) => {
+            console.log("Submitting reset password with token:", token, "and password length:", values.password.length);
             dispatch(resetPassword({ id: token, data: { password: values.password } }));
           }}
         >

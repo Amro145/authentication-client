@@ -25,15 +25,15 @@ function Signup() {
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.35, ease: "easeOut" }}
-        className="glass-card w-full max-w-[420px] p-10 shadow-2xl"
+        className="glass-card w-full max-w-md p-8 shadow-2xl"
       >
-        <div className="mb-10 text-center">
-          <h1 className="mb-3 text-2xl font-bold tracking-tight text-white">Create Account</h1>
+        <div className="mb-8 text-center">
+          <h1 className="mb-2 text-2xl font-bold tracking-tight text-white">Create Account</h1>
           <p className="text-zinc-400">Join our community today</p>
         </div>
 
         {error && (
-          <div className="mb-8 p-3.5 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400 text-xs text-center font-medium">
+          <div className="mb-6 p-3.5 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400 text-xs text-center font-medium">
             {error.message || "An error occurred during signup"}
           </div>
         )}
@@ -44,7 +44,7 @@ function Signup() {
           onSubmit={(values) => dispatch(signup(values))}
         >
           {({ isValid, dirty }) => (
-            <Form className="space-y-6">
+            <Form className="flex flex-col gap-y-4">
               <div className="space-y-2.5">
                 <label className="text-xs font-semibold uppercase tracking-widest text-zinc-100">Full Name</label>
                 <Field
@@ -81,7 +81,7 @@ function Signup() {
               <button
                 type="submit"
                 disabled={!isValid || !dirty || signupLoading}
-                className="btn-primary w-full mt-4 font-bold shadow-lg shadow-indigo-500/10"
+                className="btn-primary"
               >
                 {signupLoading ? (
                   <Loader2 className="animate-spin" size={18} />
@@ -93,7 +93,7 @@ function Signup() {
           )}
         </Formik>
 
-        <div className="mt-10 text-center">
+        <div className="mt-8 text-center">
           <p className="text-zinc-500 text-sm">
             Already have an account?{" "}
             <Link to="/login" className="auth-link">

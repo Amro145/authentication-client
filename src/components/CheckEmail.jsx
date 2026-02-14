@@ -68,15 +68,15 @@ function CheckEmail() {
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.35, ease: "easeOut" }}
-        className="glass-card w-full max-w-[420px] p-10 shadow-2xl text-center"
+        className="glass-card w-full max-w-md p-8 shadow-2xl text-center"
       >
-        <div className="mb-10">
-          <h1 className="mb-3 text-2xl font-bold tracking-tight text-white">Verify Email</h1>
+        <div className="mb-8">
+          <h1 className="mb-2 text-2xl font-bold tracking-tight text-white">Verify Email</h1>
           <p className="text-zinc-400">Enter the 6-digit code sent to your inbox</p>
         </div>
 
         {error && (
-          <div className="mb-8 p-3.5 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400 text-xs text-center font-medium">
+          <div className="mb-6 p-3.5 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400 text-xs text-center font-medium">
             {error.message || "Invalid or expired code"}
           </div>
         )}
@@ -87,7 +87,7 @@ function CheckEmail() {
           onSubmit={(values) => dispatch(verifyEmail({ verificationToken: values.code }))}
         >
           {({ isValid, dirty }) => (
-            <Form className="space-y-6">
+            <Form className="flex flex-col gap-y-4">
               <div className="space-y-2.5">
                 <label className="text-xs font-semibold uppercase tracking-widest text-zinc-100 text-left">Security Code</label>
                 <Field
@@ -103,7 +103,7 @@ function CheckEmail() {
               <button
                 type="submit"
                 disabled={!isValid || !dirty || verifyEmailLoading}
-                className="btn-primary w-full mt-4 font-bold shadow-lg shadow-indigo-500/10"
+                className="btn-primary"
               >
                 {verifyEmailLoading ? (
                   <Loader2 className="animate-spin" size={18} />
@@ -115,8 +115,8 @@ function CheckEmail() {
           )}
         </Formik>
 
-        <div className="mt-10 pt-10 border-t border-zinc-900/80">
-          <p className="text-zinc-500 text-sm mb-4">Didn't receive the code?</p>
+        <div className="mt-8 pt-8 border-t border-zinc-900/80">
+          <p className="text-zinc-500 text-sm mb-3">Didn't receive the code?</p>
           <button
             onClick={handleResend}
             disabled={resendTimer > 0 || resendVerificationLoading}

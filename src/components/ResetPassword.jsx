@@ -37,18 +37,18 @@ function ResetPassword() {
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.35 }}
-          className="glass-card w-full max-w-[420px] p-10 text-center shadow-2xl"
+          className="glass-card w-full max-w-md p-8 text-center shadow-2xl"
         >
           <div className="mx-auto w-14 h-14 bg-emerald-500/10 rounded-2xl flex items-center justify-center mb-6">
             <CheckCircle className="text-emerald-400" size={28} />
           </div>
-          <h1 className="mb-3 text-2xl font-bold tracking-tight text-white">Success</h1>
-          <p className="mb-10 text-zinc-400">
+          <h1 className="mb-2 text-2xl font-bold tracking-tight text-white">Success</h1>
+          <p className="mb-8 text-zinc-400">
             Your password has been successfully updated.
           </p>
           <button
             onClick={() => navigate("/login")}
-            className="btn-primary w-full font-bold shadow-lg shadow-indigo-500/10"
+            className="btn-primary"
           >
             Back to Sign In
           </button>
@@ -63,15 +63,15 @@ function ResetPassword() {
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.35, ease: "easeOut" }}
-        className="glass-card w-full max-w-[420px] p-10 shadow-2xl"
+        className="glass-card w-full max-w-md p-8 shadow-2xl"
       >
-        <div className="mb-10 text-center">
-          <h1 className="mb-3 text-2xl font-bold tracking-tight text-white">New Password</h1>
+        <div className="mb-8 text-center">
+          <h1 className="mb-2 text-2xl font-bold tracking-tight text-white">New Password</h1>
           <p className="text-zinc-400">Create a secure new password</p>
         </div>
 
         {error && (
-          <div className="mb-8 p-3.5 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400 text-xs text-center font-medium">
+          <div className="mb-6 p-3.5 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400 text-xs text-center font-medium">
             {error.message || "An error occurred"}
           </div>
         )}
@@ -84,7 +84,7 @@ function ResetPassword() {
           }}
         >
           {({ isValid, dirty }) => (
-            <Form className="space-y-6">
+            <Form className="flex flex-col gap-y-4">
               <div className="space-y-2.5">
                 <label className="text-xs font-semibold uppercase tracking-widest text-zinc-100">New Password</label>
                 <Field
@@ -110,7 +110,7 @@ function ResetPassword() {
               <button
                 type="submit"
                 disabled={!isValid || !dirty || resetPasswordLoading}
-                className="btn-primary w-full mt-4 font-bold shadow-lg shadow-indigo-500/10"
+                className="btn-primary"
               >
                 {resetPasswordLoading ? (
                   <Loader2 className="animate-spin" size={18} />
@@ -122,7 +122,7 @@ function ResetPassword() {
           )}
         </Formik>
 
-        <div className="mt-10 text-center">
+        <div className="mt-8 text-center">
           <Link to="/login" className="auth-link text-sm inline-flex items-center gap-2">
             <ArrowLeft size={16} />
             Back to sign in

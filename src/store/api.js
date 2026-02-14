@@ -68,3 +68,12 @@ export const checkAuth = createAsyncThunk("auth/checkAuth", async (_, { rejectWi
         return handleThunkError(error, rejectWithValue);
     }
 });
+
+export const resendVerification = createAsyncThunk("auth/resendVerification", async (data, { rejectWithValue }) => {
+    try {
+        const res = await api.post("/resend-verification", data);
+        return res.data;
+    } catch (error) {
+        return handleThunkError(error, rejectWithValue);
+    }
+});

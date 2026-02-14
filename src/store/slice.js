@@ -18,6 +18,7 @@ const initialState = {
     resetPasswordLoading: false,
     forgotPasswordLoading: false,
     logoutLoading: false,
+    resendVerificationLoading: false,
     error: null,
     success: false, // Added for UI notifications
 }

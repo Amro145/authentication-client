@@ -1,14 +1,16 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { motion } from "framer-motion";
-import { verifyEmail } from "../store/api";
-import { MailOpen, Loader2 } from "lucide-react";
+import { verifyEmail, resendVerification } from "../store/api";
+import { MailOpen, Loader2, RefreshCw } from "lucide-react";
+import Swal from "sweetalert2";
 
 function CheckEmail() {
   const [code, setCode] = useState(["", "", "", "", "", ""]);
   const inputRefs = useRef([]);
   const dispatch = useDispatch();
-  const { verifyEmailLoading, error } = useSelector((state) => state.auth);
+  const { verifyEmailLoading, resendVerificationLoading, userData, error } = useSelector((state) => state.auth);
+  const [resendCooldown, setResendCooldown] = useState(0);
 
   const handleChange = (index, value) => {
     const char = value.slice(-1); // Only take the last character
@@ -50,6 +52,36 @@ function CheckEmail() {
       handleSubmit();
     }
   }, [code]);
+
+  useEffect(() => {
+    let timer;
+    if (resendCooldown > 0) {
+      timer = setInterval(() => {
+        setResendCooldown((prev) => prev - 1);
+      }, 1000);
+    }
+    return () => clearInterval(timer);
+  }, [resendCooldown]);
+
+  const handleResendCode = async () => {
+    if (!userData?.email) return;
+
+    const resultAction = await dispatch(resendVerification({ email: userData.email }));
+    if (resendVerification.fulfilled.match(resultAction)) {
+      setResendCooldown(60); // 60 seconds cooldown
+      Swal.fire({
+        icon: 'success',
+        title: 'Sent!',
+        text: 'A new verification code has been sent to your email.',
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        backgroundColor: '#1e1b4b',
+        color: '#fff'
+      });
+    }
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4">
@@ -107,6 +139,24 @@ function CheckEmail() {
             )}
           </button>
         </form>
+
+        <div className="mt-8 pt-8 border-t border-white/5">
+          <p className="text-slate-400 text-sm mb-4">Didn't receive the code?</p>
+          <button
+            onClick={handleResendCode}
+            disabled={resendVerificationLoading || resendCooldown > 0}
+            className="flex items-center justify-center gap-2 mx-auto text-indigo-400 hover:text-indigo-300 transition-colors disabled:opacity-50 disabled:cursor-not-allowed group"
+          >
+            {resendVerificationLoading ? (
+              <Loader2 className="animate-spin" size={18} />
+            ) : (
+              <RefreshCw size={18} className={`${resendCooldown > 0 ? '' : 'group-hover:rotate-180'} transition-transform duration-500`} />
+            )}
+            <span className="font-medium">
+              {resendCooldown > 0 ? `Resend Code (${resendCooldown}s)` : "Resend Code"}
+            </span>
+          </button>
+        </div>
       </motion.div>
     </div>
   );

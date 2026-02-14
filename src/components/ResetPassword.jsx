@@ -15,6 +15,7 @@ function ResetPassword() {
   const { resetPasswordLoading, error, success } = useSelector((state) => state.auth);
 
   useEffect(() => {
+    dispatch(resetSuccess());
     return () => {
       dispatch(resetSuccess());
     };

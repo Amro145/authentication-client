@@ -20,7 +20,8 @@ const initialState = {
     logoutLoading: false,
     resendVerificationLoading: false,
     error: null,
-    success: false, // Added for UI notifications
+    success: false,
+    lastAction: null,
 }
 
 const authSlice = createSlice({
@@ -64,9 +65,11 @@ const authSlice = createSlice({
                     const baseType = action.type.split("/")[1];
                     state[`${baseType}Loading`] = false;
                     state.success = true;
+                    state.lastAction = baseType; // Track which action succeeded
 
                     if (baseType === 'logout') {
                         state.userData = null;
+                        state.success = false; // Reset success on logout
                     } else if (
                         ['login', 'signup', 'checkAuth', 'verifyEmail'].includes(baseType) &&
                         action.payload?.data

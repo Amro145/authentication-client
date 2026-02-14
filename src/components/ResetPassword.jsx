@@ -12,7 +12,7 @@ function ResetPassword() {
   const { token } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { resetPasswordLoading, error, success } = useSelector((state) => state.auth);
+  const { resetPasswordLoading, error, success, lastAction } = useSelector((state) => state.auth);
 
   useEffect(() => {
     dispatch(resetSuccess());
@@ -30,7 +30,7 @@ function ResetPassword() {
       .required("Confirm Password is required"),
   });
 
-  if (success) {
+  if (success && lastAction === "resetPassword") {
     return (
       <div className="min-h-screen flex items-center justify-center p-4">
         <motion.div

@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Route, Routes, useLocation } from "react-router-dom";
+import { Route, Routes, useLocation, Navigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { AnimatePresence } from "framer-motion";
 import { checkAuth, logout } from "./store/api";
@@ -96,7 +96,11 @@ function App() {
           {/* Logic-based routes */}
           <Route
             path="/reset-password/:token"
-            element={<ResetPassword />}
+            element={
+              <PublicRoute>
+                <ResetPassword />
+              </PublicRoute>
+            }
           />
 
           <Route
@@ -105,14 +109,12 @@ function App() {
               userData && !userData.isVerified ? (
                 <CheckEmail />
               ) : (
-                <PublicRoute>
-                  <Login />
-                </PublicRoute>
+                <Navigate to="/" replace />
               )
             }
           />
 
-          <Route path="*" element={<Loading />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </AnimatePresence>
     </div>

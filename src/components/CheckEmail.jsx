@@ -84,21 +84,20 @@ function CheckEmail() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4">
+    <div className="min-h-screen flex items-center justify-center p-6">
       <motion.div
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
-        exit={{ opacity: 0, scale: 0.95 }}
-        transition={{ type: "spring", stiffness: 300, damping: 30 }}
-        className="glass-card w-full max-w-md p-10 text-center"
+        initial={{ opacity: 0, y: 15 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4 }}
+        className="glass-card w-full max-w-md p-8 md:p-12 text-center"
       >
-        <div className="mx-auto w-16 h-16 bg-indigo-500/20 rounded-full flex items-center justify-center mb-6 ring-4 ring-indigo-500/10">
-          <MailOpen className="text-indigo-400" size={32} />
+        <div className="mx-auto w-20 h-20 bg-indigo-500/10 rounded-3xl flex items-center justify-center mb-8 ring-8 ring-indigo-500/5">
+          <Mail className="text-indigo-400" size={36} />
         </div>
 
-        <h1 className="text-3xl font-bold text-white mb-2 tracking-tight">Verify Email</h1>
-        <p className="text-slate-400 mb-8 leading-relaxed">
-          We've sent a 6-digit code to your email. Enter it below to verify your account.
+        <h1 className="text-3xl font-bold text-white mb-4">Verify Your Email</h1>
+        <p className="text-zinc-400 text-sm leading-relaxed mb-10">
+          We've sent a verification code to your email address. Please enter it below to activate your account.
         </p>
 
         {error && (
@@ -111,50 +110,59 @@ function CheckEmail() {
           </motion.p>
         )}
 
-        <form onSubmit={handleSubmit} className="space-y-8">
-          <div className="flex justify-between gap-3 max-w-sm mx-auto">
-            {code.map((digit, index) => (
-              <input
-                key={index}
-                ref={(el) => (inputRefs.current[index] = el)}
-                type="text"
-                maxLength="1"
-                value={digit}
-                onChange={(e) => handleChange(index, e.target.value)}
-                onKeyDown={(e) => handleKeyDown(index, e)}
-                className="w-12 h-14 bg-black/20 border-b-2 border-white/10 rounded-xl text-center text-xl font-bold text-white focus:border-indigo-500 focus:bg-black/40 outline-none transition-all p-2"
-              />
-            ))}
-          </div>
+        <Formik
+          initialValues={{ code: "" }}
+          validationSchema={VerifySchema}
+          onSubmit={(values) => dispatch(verifyEmail({ verificationToken: values.code }))} // Updated onSubmit to match API
+        >
+          {({ isValid, dirty }) => (
+            <Form className="space-y-8">
+              <div className="space-y-1.5 text-left">
+                <label className="text-xs font-semibold text-zinc-400 ml-1 uppercase tracking-wider">Verification Code</label>
+                <div className="relative group">
+                  <Key className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-500 group-focus-within:text-indigo-400 transition-colors" size={18} />
+                  <Field
+                    className="input-field w-full pl-12 pr-4 tracking-[0.2em] font-mono text-lg text-center"
+                    type="text"
+                    name="code"
+                    placeholder="000000"
+                    maxLength={6}
+                  />
+                </div>
+                <ErrorMessage name="code" component="div" className="error-text ml-1" />
+              </div>
 
-          <button
-            type="submit"
-            disabled={verifyEmailLoading || code.some(digit => digit === "")}
-            className="btn-primary w-full py-3 rounded-lg font-semibold text-white flex items-center justify-center gap-2 disabled:opacity-50"
-          >
-            {verifyEmailLoading ? (
-              <Loader2 className="animate-spin" size={20} />
-            ) : (
-              "Verify Now"
-            )}
-          </button>
-        </form>
+              <button
+                type="submit"
+                disabled={!isValid || !dirty || verifyEmailLoading}
+                className="btn-primary w-full py-4 flex items-center justify-center gap-2 active:scale-[0.98] transition-all"
+              >
+                {verifyEmailLoading ? (
+                  <Loader2 className="animate-spin" size={20} />
+                ) : (
+                  <>
+                    Verify Email
+                    <ChevronRight size={20} />
+                  </>
+                )}
+              </button>
+            </Form>
+          )}
+        </Formik>
 
-        <div className="mt-8 pt-8 border-t border-white/5">
-          <p className="text-slate-400 text-sm mb-4">Didn't receive the code?</p>
+        <div className="mt-12 pt-8 border-t border-zinc-800">
+          <p className="text-zinc-500 text-xs mb-4 uppercase tracking-widest font-semibold">Didn't receive the code?</p>
           <button
-            onClick={handleResendCode}
-            disabled={resendVerificationLoading || resendCooldown > 0}
-            className="flex items-center justify-center gap-2 mx-auto text-indigo-400 hover:text-indigo-300 transition-colors disabled:opacity-50 disabled:cursor-not-allowed group"
+            onClick={handleResend}
+            disabled={resendTimer > 0 || resendVerificationLoading}
+            className="flex items-center justify-center gap-2 mx-auto text-indigo-400 hover:text-indigo-300 disabled:text-zinc-600 font-bold transition-all disabled:cursor-not-allowed group"
           >
             {resendVerificationLoading ? (
               <Loader2 className="animate-spin" size={18} />
             ) : (
-              <RefreshCw size={18} className={`${resendCooldown > 0 ? '' : 'group-hover:rotate-180'} transition-transform duration-500`} />
+              <RefreshCw className={`w-4 h-4 ${resendTimer === 0 && 'group-hover:rotate-180 transition-transform duration-500'}`} />
             )}
-            <span className="font-medium">
-              {resendCooldown > 0 ? `Resend Code (${resendCooldown}s)` : "Resend Code"}
-            </span>
+            {resendTimer > 0 ? `Resend in ${resendTimer}s` : "Resend Code"}
           </button>
         </div>
       </motion.div>

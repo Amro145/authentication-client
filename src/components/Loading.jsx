@@ -1,37 +1,41 @@
 import React from "react";
 import { motion } from "framer-motion";
 
-function Loading() {
+const Loading = () => {
   return (
-    <div className="flex items-center justify-center min-h-screen bg-slate-950">
-      <div className="relative flex flex-col items-center gap-6">
-        <div className="relative w-20 h-20">
+    <div className="min-h-screen flex items-center justify-center bg-zinc-950 overflow-hidden relative">
+      <div className="bg-blobs">
+        <div className="blob blob-1"></div>
+        <div className="blob blob-2"></div>
+      </div>
+
+      <div className="text-center space-y-8 relative z-10">
+        <div className="relative">
           <motion.div
             animate={{ rotate: 360 }}
-            transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
-            className="absolute inset-0 rounded-full border-t-2 border-emerald-500"
-          ></motion.div>
+            transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+            className="w-24 h-24 rounded-[2rem] border-4 border-zinc-800 border-t-indigo-500"
+          />
           <motion.div
-            animate={{ rotate: -360 }}
-            transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-            className="absolute inset-2 rounded-full border-b-2 border-purple-500"
-          ></motion.div>
-          <motion.div
-            animate={{ opacity: [0.3, 1, 0.3] }}
-            transition={{ duration: 1.5, repeat: Infinity }}
-            className="absolute inset-0 rounded-full bg-emerald-500/10 blur-xl"
-          ></motion.div>
+            animate={{ scale: [1, 1.2, 1] }}
+            transition={{ duration: 2, repeat: Infinity }}
+            className="absolute inset-0 flex items-center justify-center"
+          >
+            <div className="w-3 h-3 bg-indigo-500 rounded-full shadow-[0_0_15px_rgba(99,102,241,0.6)]" />
+          </motion.div>
         </div>
-        <motion.div
-          animate={{ opacity: [0.4, 1, 0.4] }}
-          transition={{ duration: 1.5, repeat: Infinity }}
-          className="text-emerald-400 font-medium tracking-widest text-sm uppercase"
-        >
-          Securing your session...
-        </motion.div>
+
+        <div className="space-y-4">
+          <h2 className="text-xl font-bold text-white tracking-[0.2em] uppercase opacity-80">Authenticating</h2>
+          <div className="flex justify-center gap-1.5">
+            <motion.span animate={{ opacity: [0.2, 1, 0.2] }} transition={{ repeat: Infinity, duration: 1.5, delay: 0 }} className="w-2 h-2 bg-indigo-500 rounded-full" />
+            <motion.span animate={{ opacity: [0.2, 1, 0.2] }} transition={{ repeat: Infinity, duration: 1.5, delay: 0.3 }} className="w-2 h-2 bg-indigo-500 rounded-full" />
+            <motion.span animate={{ opacity: [0.2, 1, 0.2] }} transition={{ repeat: Infinity, duration: 1.5, delay: 0.6 }} className="w-2 h-2 bg-indigo-500 rounded-full" />
+          </div>
+        </div>
       </div>
     </div>
   );
-}
+};
 
 export default Loading;

@@ -56,6 +56,11 @@ const authSlice = createSlice({
                     state[`${baseType}Loading`] = false;
                     state.error = action.payload || { message: "An unexpected error occurred. Please try again." };
                     state.success = false;
+
+                    if (baseType === 'logout') {
+                        state.userData = null;
+                        state.error = null; // Don't show error for logout failure
+                    }
                 }
             )
             // Combined Fulfilled Handler (Success)

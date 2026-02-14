@@ -20,21 +20,21 @@ function Signup() {
   });
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center px-4 py-12">
+    <div className="min-h-screen bg-zinc-950 flex flex-col items-center justify-center px-4 py-20">
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.3 }}
-        className="glass-card w-full max-w-[400px] p-8"
+        transition={{ duration: 0.35, ease: "easeOut" }}
+        className="glass-card w-full max-w-[420px] p-10 shadow-2xl"
       >
-        <div className="mb-8">
-          <h1 className="mb-2">Create account</h1>
-          <p>Start your journey with us today</p>
+        <div className="mb-10 text-center">
+          <h1 className="mb-3 text-2xl font-bold tracking-tight text-white">Create Account</h1>
+          <p className="text-zinc-400">Join our community today</p>
         </div>
 
         {error && (
-          <div className="mb-6 p-3 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400 text-xs text-center">
-            {error.message || "An error occurred"}
+          <div className="mb-8 p-3.5 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400 text-xs text-center font-medium">
+            {error.message || "An error occurred during signup"}
           </div>
         )}
 
@@ -44,11 +44,11 @@ function Signup() {
           onSubmit={(values) => dispatch(signup(values))}
         >
           {({ isValid, dirty }) => (
-            <Form className="space-y-5">
-              <div className="space-y-2">
-                <label className="text-xs font-medium text-zinc-400 uppercase tracking-tight">Full Name</label>
+            <Form className="space-y-6">
+              <div className="space-y-2.5">
+                <label className="text-xs font-semibold uppercase tracking-widest text-zinc-100">Full Name</label>
                 <Field
-                  className="input-field w-full"
+                  className="input-field"
                   type="text"
                   name="name"
                   placeholder="John Doe"
@@ -56,21 +56,21 @@ function Signup() {
                 <ErrorMessage name="name" component="div" className="error-text" />
               </div>
 
-              <div className="space-y-2">
-                <label className="text-xs font-medium text-zinc-400 uppercase tracking-tight">Email</label>
+              <div className="space-y-2.5">
+                <label className="text-xs font-semibold uppercase tracking-widest text-zinc-100">Email</label>
                 <Field
-                  className="input-field w-full"
+                  className="input-field"
                   type="email"
                   name="email"
-                  placeholder="name@example.com"
+                  placeholder="you@example.com"
                 />
                 <ErrorMessage name="email" component="div" className="error-text" />
               </div>
 
-              <div className="space-y-2">
-                <label className="text-xs font-medium text-zinc-400 uppercase tracking-tight">Password</label>
+              <div className="space-y-2.5">
+                <label className="text-xs font-semibold uppercase tracking-widest text-zinc-100">Password</label>
                 <Field
-                  className="input-field w-full"
+                  className="input-field"
                   type="password"
                   name="password"
                   placeholder="••••••••"
@@ -81,7 +81,7 @@ function Signup() {
               <button
                 type="submit"
                 disabled={!isValid || !dirty || signupLoading}
-                className="btn-primary w-full py-2.5 mt-4 flex items-center justify-center gap-2"
+                className="btn-primary w-full mt-4 font-bold shadow-lg shadow-indigo-500/10"
               >
                 {signupLoading ? (
                   <Loader2 className="animate-spin" size={18} />
@@ -93,10 +93,10 @@ function Signup() {
           )}
         </Formik>
 
-        <div className="mt-8 text-center">
-          <p className="text-zinc-500">
+        <div className="mt-10 text-center">
+          <p className="text-zinc-500 text-sm">
             Already have an account?{" "}
-            <Link to="/login" className="text-indigo-400 hover:text-indigo-300 font-medium transition-colors">
+            <Link to="/login" className="auth-link">
               Sign in
             </Link>
           </p>

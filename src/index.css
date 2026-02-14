@@ -6,14 +6,15 @@
 
 :root {
   --bg-dark: #09090b; /* Zinc-950 */
-  --bg-card: #09090b; /* Same as bg for a seamless look */
-  --primary: #6366f1; /* Indigo-500 */
-  --primary-hover: #4f46e5; /* Indigo-600 */
-  --text-primary: #fafafa; /* Zinc-50 */
+  --bg-card: rgba(24, 24, 27, 0.5); /* Zinc-900/50 */
+  --bg-input: #18181b; /* Zinc-900 */
+  --primary: #4f46e5; /* Indigo-600 */
+  --primary-hover: #6366f1; /* Indigo-500 */
+  --text-primary: #f4f4f5; /* Zinc-100 */
   --text-secondary: #a1a1aa; /* Zinc-400 */
-  --text-muted: #52525b; /* Zinc-600 */
-  --border-color: rgba(39, 39, 42, 0.6); /* Zinc-800 with low opacity */
-  --border-hover: rgba(63, 63, 70, 0.8); /* Zinc-700 */
+  --text-muted: #71717a; /* Zinc-500 */
+  --border-color: #27272a; /* Zinc-800 */
+  --border-focus: #6366f1; /* Indigo-500 */
 }
 
 body {
@@ -23,47 +24,56 @@ body {
   color: var(--text-primary);
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
-  line-height: 1.6;
+  line-height: 1.5;
 }
 
-/* Minimalist Card Style */
+/* Apple/Vercel-style Card */
 .glass-card {
   background: var(--bg-card);
   border: 1px solid var(--border-color);
-  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
   border-radius: 12px;
+  backdrop-filter: blur(8px);
 }
 
-/* Refined Input Fields */
+/* High Contrast Input Fields */
 .input-field {
-  background: transparent;
+  background: var(--bg-input);
   border: 1px solid var(--border-color);
-  color: white;
-  transition: all 0.2s ease;
+  color: #ffffff;
+  transition: all 0.15s ease-in-out;
   border-radius: 8px;
-  padding: 0.75rem 1rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  height: 2.75rem; /* h-11 */
   font-size: 0.875rem;
+  width: 100%;
 }
 
 .input-field:focus {
-  border-color: var(--primary);
-  box-shadow: 0 0 0 1px var(--primary);
+  border-color: var(--border-focus);
   outline: none;
+  box-shadow: 0 0 0 1px var(--border-focus);
 }
 
 .input-field::placeholder {
   color: var(--text-muted);
 }
 
-/* Elegant Primary Button */
+/* High Contrast Primary Button */
 .btn-primary {
   background: var(--primary);
-  color: white;
+  color: #ffffff;
   font-weight: 500;
   font-size: 0.875rem;
-  transition: all 0.15s ease;
+  transition: all 0.2s ease;
   border-radius: 8px;
   border: 1px solid transparent;
+  height: 2.75rem; /* h-11 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
 }
 
 .btn-primary:hover:not(:disabled) {
@@ -75,26 +85,21 @@ body {
 }
 
 .btn-primary:disabled {
-  background: #18181b; /* Zinc-900 */
+  background: #27272a;
   color: var(--text-muted);
-  border: 1px solid var(--border-color);
   cursor: not-allowed;
 }
 
-/* Clean Outline Button */
-.btn-outline {
-  background: transparent;
-  color: var(--text-primary);
+/* Clean Links */
+.auth-link {
+  color: #818cf8; /* Indigo-400 */
+  transition: color 0.15s ease;
   font-weight: 500;
-  font-size: 0.875rem;
-  transition: all 0.15s ease;
-  border-radius: 8px;
-  border: 1px solid var(--border-color);
 }
 
-.btn-outline:hover:not(:disabled) {
-  background: #18181b;
-  border-color: var(--border-hover);
+.auth-link:hover {
+  color: #a5b4fc; /* Indigo-300 */
+  text-decoration: underline;
 }
 
 .error-text {
@@ -109,14 +114,23 @@ h1 {
   font-size: 1.5rem;
   font-weight: 600;
   letter-spacing: -0.025em;
-  color: var(--text-primary);
+  color: #ffffff;
 }
 
 h2 {
   font-size: 1.25rem;
   font-weight: 600;
   letter-spacing: -0.015em;
+  color: #ffffff;
+}
+
+label {
+  font-size: 0.75rem; /* text-xs */
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
   color: var(--text-primary);
+  display: block;
 }
 
 p {

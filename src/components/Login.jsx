@@ -19,21 +19,21 @@ function Login() {
   });
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center px-4 py-12">
+    <div className="min-h-screen bg-zinc-950 flex flex-col items-center justify-center px-4 py-20">
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.3 }}
-        className="glass-card w-full max-w-[400px] p-8"
+        transition={{ duration: 0.35, ease: "easeOut" }}
+        className="glass-card w-full max-w-[420px] p-10 shadow-2xl"
       >
-        <div className="mb-8">
-          <h1 className="mb-2">Sign in</h1>
-          <p>Enter your details to access your account</p>
+        <div className="mb-10 text-center">
+          <h1 className="mb-3 text-2xl font-bold tracking-tight text-white">Sign In</h1>
+          <p className="text-zinc-400">Continue to your dashboard</p>
         </div>
 
         {error && (
-          <div className="mb-6 p-3 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400 text-xs text-center">
-            {error.message || "An error occurred"}
+          <div className="mb-8 p-3.5 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400 text-xs text-center font-medium">
+            {error.message || "Invalid credentials"}
           </div>
         )}
 
@@ -43,27 +43,27 @@ function Login() {
           onSubmit={(values) => dispatch(login(values))}
         >
           {({ isValid, dirty }) => (
-            <Form className="space-y-5">
-              <div className="space-y-2">
-                <label className="text-xs font-medium text-zinc-400 uppercase tracking-tight">Email</label>
+            <Form className="space-y-6">
+              <div className="space-y-2.5">
+                <label className="text-xs font-semibold uppercase tracking-widest text-zinc-100">Email</label>
                 <Field
-                  className="input-field w-full"
+                  className="input-field"
                   type="email"
                   name="email"
-                  placeholder="name@example.com"
+                  placeholder="you@example.com"
                 />
                 <ErrorMessage name="email" component="div" className="error-text" />
               </div>
 
-              <div className="space-y-2">
+              <div className="space-y-2.5">
                 <div className="flex justify-between items-center">
-                  <label className="text-xs font-medium text-zinc-400 uppercase tracking-tight">Password</label>
-                  <Link to="/forgot-password" size="sm" className="text-indigo-400 hover:text-indigo-300 text-xs transition-colors">
-                    Forgot?
+                  <label className="text-xs font-semibold uppercase tracking-widest text-zinc-100">Password</label>
+                  <Link to="/forgot-password" size="sm" className="auth-link text-xs">
+                    Forgot password?
                   </Link>
                 </div>
                 <Field
-                  className="input-field w-full"
+                  className="input-field"
                   type="password"
                   name="password"
                   placeholder="••••••••"
@@ -74,23 +74,23 @@ function Login() {
               <button
                 type="submit"
                 disabled={!isValid || !dirty || signinLoading}
-                className="btn-primary w-full py-2.5 mt-4 flex items-center justify-center gap-2"
+                className="btn-primary w-full mt-4 font-bold shadow-lg shadow-indigo-500/10"
               >
                 {signinLoading ? (
                   <Loader2 className="animate-spin" size={18} />
                 ) : (
-                  "Continue"
+                  "Sign In"
                 )}
               </button>
             </Form>
           )}
         </Formik>
 
-        <div className="mt-8 text-center">
-          <p className="text-zinc-500">
-            New here?{" "}
-            <Link to="/signup" className="text-indigo-400 hover:text-indigo-300 font-medium transition-colors">
-              Create an account
+        <div className="mt-10 text-center">
+          <p className="text-zinc-500 text-sm">
+            Don't have an account?{" "}
+            <Link to="/signup" className="auth-link">
+              Sign up
             </Link>
           </p>
         </div>

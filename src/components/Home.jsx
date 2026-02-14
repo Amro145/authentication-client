@@ -21,9 +21,6 @@ function Home() {
           <p>Welcome back, {userData.name || "User"}.</p>
           <p>Email: {userData.email}</p>
           <p>Is Verified: {userData.isVerified ? "Yes" : "No"}</p>
-          <p>Is Active: {userData.isActive ? "Yes" : "No"}</p>
-          <p>Created At: {userData.createdAt}</p>
-          <p>Updated At: {userData.updatedAt}</p>
         </div>
 
       </motion.div>

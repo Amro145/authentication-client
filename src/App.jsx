@@ -34,7 +34,7 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-zinc-50 font-sans selection:bg-indigo-500/30">
+    <div className="min-h-screen bg-zinc-950 text-zinc-50 font-sans selection:bg-indigo-500/30 p-16">
       {/* Header / Navbar */}
       {userData && (
         <nav className="fixed top-0 left-0 right-0 p-6 flex justify-end z-50 pointer-events-none">

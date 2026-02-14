@@ -13,7 +13,7 @@ const initialState = {
     userData: null,
     checkLoading: false,
     signupLoading: false,
-    signinLoading: false,
+    loginLoading: false,
     verifyEmailLoading: false,
     resetPasswordLoading: false,
     forgotPasswordLoading: false,
@@ -40,6 +40,7 @@ const authSlice = createSlice({
                 (action) => action.type.endsWith("/pending"),
                 (state, action) => {
                     const baseType = action.type.split("/")[1];
+                    // Rename logic for loading state if needed, or ensure baseType matches
                     state[`${baseType}Loading`] = true;
                     state.error = null;
                     state.success = false;
@@ -51,7 +52,7 @@ const authSlice = createSlice({
                 (state, action) => {
                     const baseType = action.type.split("/")[1];
                     state[`${baseType}Loading`] = false;
-                    state.error = action.payload;
+                    state.error = action.payload || { message: "An unexpected error occurred. Please try again." };
                     state.success = false;
                 }
             )
@@ -65,10 +66,11 @@ const authSlice = createSlice({
 
                     if (baseType === 'logout') {
                         state.userData = null;
-                        localStorage.removeItem("userData");
-                    } else if (action.payload?.data) {
+                    } else if (
+                        ['login', 'signup', 'checkAuth', 'verifyEmail'].includes(baseType) &&
+                        action.payload?.data
+                    ) {
                         state.userData = action.payload.data;
-                        localStorage.setItem("userData", JSON.stringify(action.payload.data));
                     }
                 }
             );

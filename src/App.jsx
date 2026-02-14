@@ -34,23 +34,17 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen relative overflow-hidden px-4">
-      {/* Enhanced Background */}
-      <div className="bg-blobs">
-        <div className="blob blob-1"></div>
-        <div className="blob blob-2"></div>
-        <div className="blob blob-3"></div>
-      </div>
-
-      {/* Navbar / Header */}
+    <div className="min-h-screen bg-zinc-950 text-zinc-50 font-sans selection:bg-indigo-500/30">
+      {/* Header / Navbar */}
       {userData && (
-        <nav className="absolute top-0 right-0 p-6 z-50">
+        <nav className="fixed top-0 left-0 right-0 p-6 flex justify-end z-50">
           <button
             onClick={() => dispatch(logout())}
-            className="p-3 rounded-full bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white transition-all border border-white/5 backdrop-blur-sm group"
+            className="p-2.5 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-400 hover:text-zinc-100 hover:border-zinc-700 transition-all flex items-center gap-2 text-sm font-medium"
             title="Logout"
           >
-            <LogOut size={20} className="group-hover:scale-110 transition-transform" />
+            <LogOut size={16} />
+            <span>Sign Out</span>
           </button>
         </nav>
       )}

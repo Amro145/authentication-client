@@ -63,30 +63,22 @@ function CheckEmail() {
   });
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-6">
+    <div className="min-h-screen flex flex-col items-center justify-center px-4 py-12">
       <motion.div
-        initial={{ opacity: 0, y: 15 }}
+        initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4 }}
-        className="glass-card w-full max-w-md p-8 md:p-12 text-center"
+        transition={{ duration: 0.3 }}
+        className="glass-card w-full max-w-[400px] p-8"
       >
-        <div className="mx-auto w-20 h-20 bg-indigo-500/10 rounded-3xl flex items-center justify-center mb-8 ring-8 ring-indigo-500/5">
-          <Mail className="text-indigo-400" size={36} />
+        <div className="mb-8">
+          <h1 className="mb-2">Verify email</h1>
+          <p>We've sent a 6-digit code to your inbox. Please enter it below to continue.</p>
         </div>
 
-        <h1 className="text-3xl font-bold text-white mb-4">Verify Your Email</h1>
-        <p className="text-zinc-400 text-sm leading-relaxed mb-10">
-          We've sent a verification code to your email address. Please enter it below to activate your account.
-        </p>
-
         {error && (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="mb-8 p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-sm text-center"
-          >
+          <div className="mb-6 p-3 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400 text-xs text-center">
             {error.message || "Invalid or expired code"}
-          </motion.div>
+          </div>
         )}
 
         <Formik
@@ -95,53 +87,47 @@ function CheckEmail() {
           onSubmit={(values) => dispatch(verifyEmail({ verificationToken: values.code }))}
         >
           {({ isValid, dirty }) => (
-            <Form className="space-y-8">
-              <div className="space-y-1.5 text-left">
-                <label className="text-xs font-semibold text-zinc-400 ml-1 uppercase tracking-wider">Verification Code</label>
-                <div className="relative group">
-                  <Key className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-500 group-focus-within:text-indigo-400 transition-colors" size={18} />
-                  <Field
-                    className="input-field w-full pl-12 pr-4 tracking-[0.2em] font-mono text-lg text-center"
-                    type="text"
-                    name="code"
-                    placeholder="000000"
-                    maxLength={6}
-                  />
-                </div>
-                <ErrorMessage name="code" component="div" className="error-text ml-1" />
+            <Form className="space-y-5">
+              <div className="space-y-2">
+                <label className="text-xs font-medium text-zinc-400 uppercase tracking-tight text-left block">Code</label>
+                <Field
+                  className="input-field w-full tracking-[0.4em] font-mono text-xl text-center"
+                  type="text"
+                  name="code"
+                  placeholder="000000"
+                  maxLength={6}
+                />
+                <ErrorMessage name="code" component="div" className="error-text" />
               </div>
 
               <button
                 type="submit"
                 disabled={!isValid || !dirty || verifyEmailLoading}
-                className="btn-primary w-full py-4 flex items-center justify-center gap-2 active:scale-[0.98] transition-all"
+                className="btn-primary w-full py-2.5 mt-4 flex items-center justify-center gap-2"
               >
                 {verifyEmailLoading ? (
-                  <Loader2 className="animate-spin" size={20} />
+                  <Loader2 className="animate-spin" size={18} />
                 ) : (
-                  <>
-                    Verify Email
-                    <ChevronRight size={20} />
-                  </>
+                  "Verify"
                 )}
               </button>
             </Form>
           )}
         </Formik>
 
-        <div className="mt-12 pt-8 border-t border-zinc-800">
-          <p className="text-zinc-500 text-xs mb-4 uppercase tracking-widest font-semibold">Didn't receive the code?</p>
+        <div className="mt-8 pt-6 border-t border-zinc-900 text-center">
           <button
             onClick={handleResend}
             disabled={resendTimer > 0 || resendVerificationLoading}
-            className="flex items-center justify-center gap-2 mx-auto text-indigo-400 hover:text-indigo-300 disabled:text-zinc-600 font-bold transition-all disabled:cursor-not-allowed group"
+            className="text-xs text-zinc-500 hover:text-indigo-400 disabled:text-zinc-700 font-medium transition-colors"
           >
             {resendVerificationLoading ? (
-              <Loader2 className="animate-spin" size={18} />
+              <Loader2 className="animate-spin inline-block mr-1" size={12} />
+            ) : resendTimer > 0 ? (
+              `Wait ${resendTimer}s to resend`
             ) : (
-              <RefreshCw className={`w-4 h-4 ${resendTimer === 0 && 'group-hover:rotate-180 transition-transform duration-500'}`} />
+              "Resend verification code"
             )}
-            {resendTimer > 0 ? `Resend in ${resendTimer}s` : "Resend Code"}
           </button>
         </div>
       </motion.div>

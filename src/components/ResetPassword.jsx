@@ -32,26 +32,25 @@ function ResetPassword() {
 
   if (success && lastAction === "resetPassword") {
     return (
-      <div className="min-h-screen flex items-center justify-center p-6">
+      <div className="min-h-screen flex flex-col items-center justify-center px-4 py-12">
         <motion.div
-          initial={{ opacity: 0, y: 15 }}
+          initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4 }}
-          className="glass-card w-full max-w-md p-8 md:p-12 text-center"
+          transition={{ duration: 0.3 }}
+          className="glass-card w-full max-w-[400px] p-8 text-center"
         >
-          <div className="mx-auto w-20 h-20 bg-emerald-500/10 rounded-3xl flex items-center justify-center mb-8 ring-8 ring-emerald-500/5">
-            <CheckCircle className="text-emerald-400" size={36} />
+          <div className="mx-auto w-12 h-12 bg-emerald-500/10 rounded-xl flex items-center justify-center mb-6">
+            <CheckCircle className="text-emerald-400" size={24} />
           </div>
-          <h1 className="text-3xl font-bold text-white mb-4">Password Reset</h1>
-          <p className="text-zinc-400 text-sm leading-relaxed mb-10">
+          <h1 className="mb-2">Password reset</h1>
+          <p className="mb-8">
             Your password has been successfully updated. You can now use your new credentials to log in.
           </p>
           <button
             onClick={() => navigate("/login")}
-            className="btn-primary w-full py-4 flex items-center justify-center gap-2 active:scale-[0.98] transition-all"
+            className="btn-primary w-full py-2.5 flex items-center justify-center gap-2"
           >
-            Back to Login
-            <ArrowRight size={18} />
+            Back to sign in
           </button>
         </motion.div>
       </div>
@@ -59,21 +58,21 @@ function ResetPassword() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-6">
+    <div className="min-h-screen flex flex-col items-center justify-center px-4 py-12">
       <motion.div
-        initial={{ opacity: 0, scale: 0.98 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.4 }}
-        className="glass-card w-full max-w-md p-8 md:p-12"
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3 }}
+        className="glass-card w-full max-w-[400px] p-8"
       >
-        <div className="text-center mb-10">
-          <h1 className="text-3xl font-bold text-white mb-3">Reset Password</h1>
-          <p className="text-zinc-400 text-sm">Create a strong new password for your account</p>
+        <div className="mb-8">
+          <h1 className="mb-2">New password</h1>
+          <p>Create a strong new password for your account</p>
         </div>
 
         {error && (
-          <div className="mb-8 p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-sm text-center">
-            {error.message}
+          <div className="mb-6 p-3 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400 text-xs text-center">
+            {error.message || "An error occurred"}
           </div>
         )}
 
@@ -81,49 +80,42 @@ function ResetPassword() {
           initialValues={{ password: "", confirmPassword: "" }}
           validationSchema={resetPasswordSchema}
           onSubmit={(values) => {
-            console.log("Submitting reset password with token:", token, "and password length:", values.password.length);
             dispatch(resetPassword({ id: token, data: { password: values.password } }));
           }}
         >
           {({ isValid, dirty }) => (
-            <Form className="space-y-6">
-              <div className="space-y-1.5">
-                <label className="text-xs font-semibold text-zinc-400 ml-1 uppercase tracking-wider">New Password</label>
-                <div className="relative group">
-                  <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-500 group-focus-within:text-indigo-400 transition-colors" size={18} />
-                  <Field
-                    className="input-field w-full pl-12 pr-4"
-                    type="password"
-                    name="password"
-                    placeholder="••••••••"
-                  />
-                </div>
-                <ErrorMessage name="password" component="div" className="error-text ml-1" />
+            <Form className="space-y-5">
+              <div className="space-y-2">
+                <label className="text-xs font-medium text-zinc-400 uppercase tracking-tight">New Password</label>
+                <Field
+                  className="input-field w-full"
+                  type="password"
+                  name="password"
+                  placeholder="••••••••"
+                />
+                <ErrorMessage name="password" component="div" className="error-text" />
               </div>
 
-              <div className="space-y-1.5">
-                <label className="text-xs font-semibold text-zinc-400 ml-1 uppercase tracking-wider">Confirm Password</label>
-                <div className="relative group">
-                  <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-500 group-focus-within:text-indigo-400 transition-colors" size={18} />
-                  <Field
-                    className="input-field w-full pl-12 pr-4"
-                    type="password"
-                    name="confirmPassword"
-                    placeholder="••••••••"
-                  />
-                </div>
-                <ErrorMessage name="confirmPassword" component="div" className="error-text ml-1" />
+              <div className="space-y-2">
+                <label className="text-xs font-medium text-zinc-400 uppercase tracking-tight">Confirm Password</label>
+                <Field
+                  className="input-field w-full"
+                  type="password"
+                  name="confirmPassword"
+                  placeholder="••••••••"
+                />
+                <ErrorMessage name="confirmPassword" component="div" className="error-text" />
               </div>
 
               <button
                 type="submit"
                 disabled={!isValid || !dirty || resetPasswordLoading}
-                className="btn-primary w-full py-4 flex items-center justify-center gap-2 mt-10 active:scale-[0.98] transition-all"
+                className="btn-primary w-full py-2.5 mt-4 flex items-center justify-center gap-2"
               >
                 {resetPasswordLoading ? (
-                  <Loader2 className="animate-spin" size={20} />
+                  <Loader2 className="animate-spin" size={18} />
                 ) : (
-                  "Reset My Password"
+                  "Update Password"
                 )}
               </button>
             </Form>
@@ -131,9 +123,9 @@ function ResetPassword() {
         </Formik>
 
         <div className="mt-8 text-center">
-          <Link to="/login" className="text-indigo-400 hover:text-indigo-300 text-sm font-medium flex items-center justify-center gap-2 transition-colors">
+          <Link to="/login" className="text-zinc-500 hover:text-indigo-400 font-medium flex items-center justify-center gap-2 transition-colors">
             <ArrowLeft size={16} />
-            Back to Login
+            Back to sign in
           </Link>
         </div>
       </motion.div>

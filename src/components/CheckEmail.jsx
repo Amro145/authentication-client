@@ -1,87 +1,66 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { motion } from "framer-motion";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
+import { Mail, Key, ChevronRight, Loader2, RefreshCw } from "lucide-react";
 import { verifyEmail, resendVerification } from "../store/api";
-import { MailOpen, Loader2, RefreshCw } from "lucide-react";
 import Swal from "sweetalert2";
 
 function CheckEmail() {
-  const [code, setCode] = useState(["", "", "", "", "", ""]);
-  const inputRefs = useRef([]);
   const dispatch = useDispatch();
   const { verifyEmailLoading, resendVerificationLoading, userData, error } = useSelector((state) => state.auth);
-  const [resendCooldown, setResendCooldown] = useState(0);
+  const [resendTimer, setResendTimer] = useState(0);
 
-  const handleChange = (index, value) => {
-    const char = value.slice(-1); // Only take the last character
-    if (!char) {
-      // Handle backspace or empty
-      const newCode = [...code];
-      newCode[index] = "";
-      setCode(newCode);
+  useEffect(() => {
+    let interval;
+    if (resendTimer > 0) {
+      interval = setInterval(() => {
+        setResendTimer((prev) => prev - 1);
+      }, 1000);
+    }
+    return () => clearInterval(interval);
+  }, [resendTimer]);
+
+  const handleResend = async () => {
+    const email = userData?.email || localStorage.getItem("email_for_verification");
+    if (!email) {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "User email not found. Please try signing up again.",
+      });
       return;
     }
 
-    if (/^[0-9]$/.test(char)) {
-      const newCode = [...code];
-      newCode[index] = char;
-      setCode(newCode);
-      if (index < 5) {
-        inputRefs.current[index + 1].focus();
-      }
-    }
-  };
-
-  const handleKeyDown = (index, e) => {
-    if (e.key === "Backspace" && !code[index] && index > 0) {
-      inputRefs.current[index - 1].focus();
-    }
-  };
-
-  const handleSubmit = (e) => {
-    if (e) e.preventDefault();
-    const verificationCode = code.join("");
-    if (verificationCode.length === 6) {
-      dispatch(verifyEmail({ verificationToken: verificationCode }));
-    }
-  };
-
-  // Auto-submit when all digits are filled
-  useEffect(() => {
-    if (code.every(digit => digit !== "")) {
-      handleSubmit();
-    }
-  }, [code]);
-
-  useEffect(() => {
-    let timer;
-    if (resendCooldown > 0) {
-      timer = setInterval(() => {
-        setResendCooldown((prev) => prev - 1);
-      }, 1000);
-    }
-    return () => clearInterval(timer);
-  }, [resendCooldown]);
-
-  const handleResendCode = async () => {
-    if (!userData?.email) return;
-
-    const resultAction = await dispatch(resendVerification({ email: userData.email }));
-    if (resendVerification.fulfilled.match(resultAction)) {
-      setResendCooldown(60); // 60 seconds cooldown
+    try {
+      await dispatch(resendVerification({ email })).unwrap();
+      setResendTimer(60);
       Swal.fire({
-        icon: 'success',
-        title: 'Sent!',
-        text: 'A new verification code has been sent to your email.',
+        icon: "success",
+        title: "Sent!",
+        text: "A new verification code has been sent to your email.",
         toast: true,
-        position: 'top-end',
+        position: "top-end",
         showConfirmButton: false,
         timer: 3000,
-        backgroundColor: '#1e1b4b',
-        color: '#fff'
+        timerProgressBar: true,
+      });
+    } catch (err) {
+      Swal.fire({
+        icon: "error",
+        title: "Failed",
+        text: err.message || "Could not resend code.",
       });
     }
   };
+
+  const VerifySchema = Yup.object().shape({
+    code: Yup.string()
+      .length(6, "Code must be exactly 6 digits")
+      .matches(/^\d+$/, "Code must contain only numbers")
+      .required("Verification code is required"),
+  });
 
   return (
     <div className="min-h-screen flex items-center justify-center p-6">
@@ -101,19 +80,19 @@ function CheckEmail() {
         </p>
 
         {error && (
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="mb-6 text-rose-400 text-sm bg-rose-500/10 py-2 rounded-lg border border-rose-500/20"
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="mb-8 p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-sm text-center"
           >
             {error.message || "Invalid or expired code"}
-          </motion.p>
+          </motion.div>
         )}
 
         <Formik
           initialValues={{ code: "" }}
           validationSchema={VerifySchema}
-          onSubmit={(values) => dispatch(verifyEmail({ verificationToken: values.code }))} // Updated onSubmit to match API
+          onSubmit={(values) => dispatch(verifyEmail({ verificationToken: values.code }))}
         >
           {({ isValid, dirty }) => (
             <Form className="space-y-8">

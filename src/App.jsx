@@ -34,7 +34,7 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen relative overflow-hidden">
+    <div className="min-h-screen relative overflow-hidden px-4">
       {/* Enhanced Background */}
       <div className="bg-blobs">
         <div className="blob blob-1"></div>

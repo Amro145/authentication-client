@@ -4,7 +4,7 @@ import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Lock, ArrowLeft, Loader2, CheckCircle } from "lucide-react";
+import { Lock, ArrowLeft, Loader2, CheckCircle, ArrowRight } from "lucide-react";
 import { resetPassword } from "../store/api";
 import { resetSuccess } from "../store/slice";
 

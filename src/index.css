@@ -154,3 +154,9 @@ p {
 html {
   scroll-behavior: smooth;
 }
+.parent {
+  padding: 0px 20px;
+}
+.BUt{
+  margin: 5px 0px;
+}

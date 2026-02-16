@@ -34,21 +34,22 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-zinc-50 font-sans selection:bg-indigo-500/30 p-16">
+    <div className="min-h-screen bg-zinc-950 text-zinc-50 font-sans selection:bg-indigo-500/30 " style={{ padding: "0px 100px" }}>
       {/* Header / Navbar */}
-      {userData && (
-        <nav className="fixed top-0 left-0 right-0 p-6 flex justify-end z-50 pointer-events-none">
-          <button
-            onClick={() => dispatch(logout())}
-            className="p-2.5 px-4 rounded-full bg-zinc-900 border border-zinc-800 text-zinc-100 hover:text-white hover:border-zinc-400 transition-all flex items-center gap-2 text-xs font-semibold tracking-wide shadow-xl pointer-events-auto"
-            title="Logout"
-          >
-            <LogOut size={14} />
-            <span>SIGN OUT</span>
-          </button>
-        </nav>
-      )}
-
+      {
+        userData && (
+          <nav className="fixed top-0 left-0 right-0 p-6 flex justify-end z-50 pointer-events-none">
+            <button
+              onClick={() => dispatch(logout())}
+              className="p-2.5 px-4 rounded-full bg-zinc-900 border border-zinc-800 text-zinc-100 hover:text-white hover:border-zinc-400 transition-all flex items-center gap-2 text-xs font-semibold tracking-wide shadow-xl pointer-events-auto"
+              title="Logout"
+            >
+              <LogOut size={14} />
+              <span>SIGN OUT</span>
+            </button>
+          </nav>
+        )
+      }
       <AnimatePresence mode="wait">
         <Routes location={location} key={location.pathname}>
           {/* Protected Routes */}
@@ -90,7 +91,7 @@ function App() {
           {/* Logic-based routes */}
           <Route
             path="/reset-password/:token"
-            
+
             element={
               <PublicRoute>
                 <ResetPassword />
@@ -112,7 +113,8 @@ function App() {
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </AnimatePresence>
-    </div>
+
+    </div >
   );
 }
 

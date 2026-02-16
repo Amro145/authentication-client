@@ -68,7 +68,7 @@ function CheckEmail() {
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.35, ease: "easeOut" }}
-        className="glass-card w-full max-w-md p-8 shadow-2xl text-center"
+        className="parent glass-card w-full max-w-md p-8 shadow-2xl text-center"
       >
         <div className="mb-8">
           <h1 className="mb-2 text-2xl font-bold tracking-tight text-white">Verify Email</h1>

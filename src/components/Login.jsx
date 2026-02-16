@@ -19,12 +19,12 @@ function Login() {
   });
 
   return (
-    <div className="min-h-screen bg-zinc-950 flex flex-col items-center justify-center px-4 py-20">
+    <div className="parent min-h-screen bg-zinc-950 flex flex-col items-center justify-center mx-auto"> 
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.35, ease: "easeOut" }}
-        className="glass-card w-full max-w-md p-8 shadow-2xl"
+        className="parent glass-card w-full max-w-md p-8 shadow-2xl max-w-md "
       >
         <div className="mb-8 text-center">
           <h1 className="mb-2 text-2xl font-bold tracking-tight text-white">Sign In</h1>
@@ -43,7 +43,7 @@ function Login() {
           onSubmit={(values) => dispatch(login(values))}
         >
           {({ isValid, dirty }) => (
-            <Form className="flex flex-col gap-y-4">
+            <Form className="flex flex-col gap-y-4 mb-5">
               <div className="space-y-2.5">
                 <label className="text-xs font-semibold uppercase tracking-widest text-zinc-100">Email</label>
                 <Field
@@ -75,6 +75,7 @@ function Login() {
                 type="submit"
                 disabled={!isValid || !dirty || signinLoading}
                 className="btn-primary"
+                style={{ marginTop: "20px" }}
               >
                 {signinLoading ? (
                   <Loader2 className="animate-spin" size={18} />

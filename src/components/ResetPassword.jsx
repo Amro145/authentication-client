@@ -32,12 +32,13 @@ function ResetPassword() {
 
   if (success && lastAction === "resetPassword") {
     return (
-      <div className="min-h-screen bg-zinc-950 flex flex-col items-center justify-center px-4 py-20">
+      <div className=" min-h-screen bg-zinc-950 flex flex-col items-center justify-center px-4 py-20">
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.35 }}
-          className="glass-card w-full max-w-md p-8 text-center shadow-2xl"
+          className="parent glass-card w-full max-w-md p-8 text-center shadow-2xl"
+
         >
           <div className="mx-auto w-14 h-14 bg-emerald-500/10 rounded-2xl flex items-center justify-center mb-6">
             <CheckCircle className="text-emerald-400" size={28} />
@@ -63,7 +64,7 @@ function ResetPassword() {
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.35, ease: "easeOut" }}
-        className="glass-card w-full max-w-md p-8 shadow-2xl"
+        className="parent glass-card w-full max-w-md p-8 shadow-2xl"
       >
         <div className="mb-8 text-center">
           <h1 className="mb-2 text-2xl font-bold tracking-tight text-white">New Password</h1>

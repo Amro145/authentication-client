@@ -25,7 +25,7 @@ function Signup() {
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.35, ease: "easeOut" }}
-        className="glass-card w-full max-w-md p-8 shadow-2xl"
+        className="parent glass-card w-full max-w-md p-8 shadow-2xl"
       >
         <div className="mb-8 text-center">
           <h1 className="mb-2 text-2xl font-bold tracking-tight text-white">Create Account</h1>
@@ -82,6 +82,7 @@ function Signup() {
                 type="submit"
                 disabled={!isValid || !dirty || signupLoading}
                 className="btn-primary"
+                style={{ margin: "20px 0px" }}
               >
                 {signupLoading ? (
                   <Loader2 className="animate-spin" size={18} />
